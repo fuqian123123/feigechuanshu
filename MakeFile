@@ -1,4 +1,4 @@
-client:
-	$(CC) tcp_op.c udp_op.c util.c main.c -o client
+myclient:
+	$(CC) tcp_op.c udp_op.c util.c main.c -o myclient
 clean:
-	rm -rf ./client
+	rm -rf ./myclient
