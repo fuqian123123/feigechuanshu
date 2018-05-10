@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "my_udp.h"
+#include "./my_udp/my_udp.h"
 
 int main(int argc,char* argv[]){
-    int udp_init();
+    udp_init();
     return 0;
 }    
