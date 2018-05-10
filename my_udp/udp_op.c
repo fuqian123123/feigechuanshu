@@ -27,7 +27,6 @@ int udp_init(){
     theirAddr.sin_port = htons(BR_PORT);
     int sendBytes;
     gethostname(myHostName,sizeof(myHostName));
-    puts(myHostName);
     sprintf(buffer,"%d:%ld:%s:%s:%d:%s",IPMSG_VERSION,time(NULL),myHostName,myHostName,IPMSG_BR_ENTRY,"");
     if((sendBytes = sendto(brFd,buffer,strlen(buffer),0,
             (struct sockaddr*)&theirAddr,sizeof(struct sockaddr)))== -1){
