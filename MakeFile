@@ -1,0 +1,4 @@
+client:
+	$(CC) tcp_op.c udp_op.c util.c main.c -o client
+clean:
+	rm -rf ./client
