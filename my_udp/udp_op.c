@@ -13,7 +13,7 @@ static const int BR_PORT = 4001;
 static const int RECV_PORT = 4002;
 static char buffer[1024];
 static char myHostName[256];
-void br_entry(){
+void br_entry_send(){
     int brFd;
     if((brFd = socket(AF_INET,SOCK_DGRAM,0)) == -1){
         perror("br_entry:udp socket create failed!");
@@ -54,7 +54,7 @@ void br_entry_rece(){
         perror("br_entry_rece:udp bind failed!");
     }
     while(1){
-        recvfrom(receFd,&buffer,sizeof(buffer),(struct sockaddr_in*)&myAddr,(socklen_t*)&addr_len);
+        recvfrom(receFd,&buffer,sizeof(buffer),0,(struct sockaddr_in*)&myAddr,(socklen_t*)&addr_len);
         printf("%s\n",buffer);
     }
     close(receFd);
