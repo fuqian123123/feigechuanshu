@@ -7,6 +7,7 @@ typedef struct userlist
 	char host[20];	//主机名
 	int s_addr;		//IP地址(32位网络字节序)
 	struct userlist *next;
+	struct userlist *pre;
 }IPMSG_USER;
 
 //文件信息结构体
