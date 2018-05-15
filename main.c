@@ -1,7 +1,9 @@
 #include <stdio.h>
+#include <pthread.h>
 #include "./my_udp/my_udp.h"
 
 int main(int argc,char* argv[]){
-    udp_init();
+    br_entry();
+    
     return 0;
 }    
