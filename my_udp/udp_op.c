@@ -5,6 +5,7 @@
 #include <time.h>
 #include <string.h>
 #include <netinet/in.h>
+#include <stdbool.h>
 #include "../util/util.h"
 #include "../ipmsg.h"
 #include "../my_udp/my_udp.h"
@@ -72,20 +73,24 @@ void br_entry_rece(void){
     if(receFd == -1){
         perror("br_entry_rece:udp socket create failed!");
     }
-    struct sockaddr_in myAddr;
+    int set = 1;  
+    setsockopt(receFd, SOL_SOCKET, SO_REUSEADDR, &set, sizeof(int)); 
+    struct sockaddr_in server;
     int addr_len = sizeof(struct sockaddr_in);
-    memset(&myAddr,0,sizeof(struct sockaddr_in));
-    myAddr.sin_family = AF_INET;
-    myAddr.sin_port = BR_PORT;
-    myAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+    memset(&server,0,sizeof(struct sockaddr_in));
+    server.sin_family = AF_INET;
+    server.sin_port = RECV_PORT;
+    server.sin_addr.s_addr = INADDR_ANY;    
     int ret;
-    ret = bind(receFd,(struct sockaddr*)&myAddr,sizeof(myAddr));
-    if(ret == -1){
+    ret = bind(receFd,(struct sockaddr*)&server,sizeof(struct sockaddr));
+    if(ret < 0){
         perror("br_entry_rece:udp bind failed!");
     }
     int receBytes;
     while(1){
-        receBytes = recvfrom(receFd,&buffer,sizeof(buffer),0,(struct sockaddr*)&myAddr,(socklen_t*)&addr_len);
+        receBytes = recvfrom(receFd,buffer,sizeof(buffer),0,
+            (struct sockaddr*)&server,(socklen_t*)&addr_len);
+        printf("hehe");
         if(receBytes > 0){
             buffer[receBytes] = '\0';
             printf("%s\n",buffer);

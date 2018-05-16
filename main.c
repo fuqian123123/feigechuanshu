@@ -28,9 +28,10 @@ int main(int argc,char* argv[]){
     pthread_detach(id1);
     //pthread_join(id1,NULL);
     br_entry_send();
-    br_exit_send();
+    //br_exit_send();
     while(1){
-        
-    }
+        //br_entry_send();
+        sleep(1);
+    };
     return 0;
 }    
