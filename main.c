@@ -3,20 +3,6 @@
 #include <unistd.h> 
 #include "./my_udp/my_udp.h"
 
-void test1(){
-    int i;
-    for(i = 0; i < 3; i++){
-        printf("one test %d\n",i);
-        sleep(1);
-    }
-}
-void test2(){
-    int i;
-    for(i = 0; i < 3; i++){
-        printf("two test %d\n",i);
-        sleep(1);
-    }
-}
 int main(int argc,char* argv[]){
     
     int ret;
