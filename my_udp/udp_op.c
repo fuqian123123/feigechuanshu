@@ -29,11 +29,10 @@ void br_entry_send(){
     char myHostName[256];
     gethostname(myHostName,sizeof(myHostName));
 
-    sprintf(buffer,"%d:%ld:%s:%s:%d:%s",IPMSG_VERSION,time(NULL),myHostName,myHostName,IPMSG_BR_ENTRY,"");
+    sprintf(buffer,"%ld:%ld:%s:%s:%d:%s",IPMSG_VERSION,time(NULL),myHostName,myHostName,IPMSG_BR_ENTRY,"");
     if((sendBytes = sendto(brFd,buffer,strlen(buffer),0,
             (struct sockaddr*)&theirAddr,sizeof(struct sockaddr)))== -1){
         perror("br_entry:udp send msg failed!");
-	    return EXIT_FAILURE;
     }
     printf("%d\n",sendBytes);
     close(brFd);
@@ -54,11 +53,10 @@ void br_exit_send(){
     char myHostName[256];
     gethostname(myHostName,sizeof(myHostName));
 
-    sprintf(buffer,"%d:%ld:%s:%s:%d:%s",IPMSG_VERSION,time(NULL),myHostName,myHostName,IPMSG_BR_EXIT,"");
+    sprintf(buffer,"%ld:%ld:%s:%s:%d:%s",IPMSG_VERSION,time(NULL),myHostName,myHostName,IPMSG_BR_EXIT,"");
     if((sendBytes = sendto(brFd,buffer,strlen(buffer),0,
             (struct sockaddr*)&theirAddr,sizeof(struct sockaddr)))== -1){
         perror("br_exit:udp send msg failed!");
-	    return EXIT_FAILURE;
     }
     printf("%d\n",sendBytes);
     close(brFd);
@@ -76,7 +74,8 @@ void br_entry_rece(){
     myAddr.sin_port = RECV_PORT;
     myAddr.sin_addr.s_addr = htonl(INADDR_ANY);
     int ret;
-    if((ret = bind(receFd,(struct sockaddr_in*)&myAddr,sizeof(myAddr))) < 0){
+    ret = bind(receFd,(struct sockaddr_in*)&myAddr,sizeof(myAddr));
+    if(ret < 0){
         perror("br_entry_rece:udp bind failed!");
     }
     while(1){

@@ -6,14 +6,14 @@
 void test1(){
     int i;
     for(i = 0; i < 3; i++){
-        printf("one test %d",i);
+        printf("one test %d\n",i);
         sleep(1);
     }
 }
 void test2(){
     int i;
     for(i = 0; i < 3; i++){
-        printf("two test %d",i);
+        printf("two test %d\n",i);
         sleep(1);
     }
 }
