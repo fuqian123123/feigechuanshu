@@ -18,14 +18,19 @@ void test2(){
     }
 }
 int main(int argc,char* argv[]){
-    br_entry_send();
-    br_exit_send();
+    
     int ret;
     pthread_t id1;
     ret = pthread_create(&id1,NULL,(void*)br_entry_rece,NULL);
     if(ret){
         perror("id1 created failed!");
     }
-    pthread_join(id1,NULL);
+    pthread_detach(id1);
+    //pthread_join(id1,NULL);
+    br_entry_send();
+    br_exit_send();
+    while(1){
+        
+    }
     return 0;
 }    

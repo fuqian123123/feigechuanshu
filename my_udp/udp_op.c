@@ -12,10 +12,10 @@
 static const char BR_ADDR[] = "10.18.23.255";
 static const int BR_PORT = 4001;
 static const int RECV_PORT = 4002;
-static char buffer[1024];
 //user entry
 void br_entry_send(void){
     int brFd;
+    char buffer[BUFSIZ];
     if((brFd = socket(AF_INET,SOCK_DGRAM,0)) == -1){
         perror("br_entry:udp socket create failed!");
     }
@@ -30,7 +30,7 @@ void br_entry_send(void){
     char myHostName[256];
     gethostname(myHostName,sizeof(myHostName));
 
-    sprintf(buffer,"%ld:%ld:%s:%s:%d:%s",IPMSG_VERSION,time(NULL),myHostName,myHostName,IPMSG_BR_ENTRY,"");
+    sprintf(buffer,"%d:%ld:%s:%s:%d:%s",(int)IPMSG_VERSION,(long int)time(NULL),myHostName,myHostName,(int)IPMSG_BR_ENTRY,"");
     if((sendBytes = sendto(brFd,buffer,strlen(buffer),0,
             (struct sockaddr*)&theirAddr,sizeof(struct sockaddr)))== -1){
         perror("br_entry:udp send msg failed!");
@@ -41,6 +41,7 @@ void br_entry_send(void){
 //user exit
 void br_exit_send(void){
     int brFd;
+    char buffer[BUFSIZ];
     if((brFd = socket(AF_INET,SOCK_DGRAM,0)) == -1){
         perror("br_exit:udp socket create failed!");
     }
@@ -55,7 +56,7 @@ void br_exit_send(void){
     char myHostName[256];
     gethostname(myHostName,sizeof(myHostName));
 
-    sprintf(buffer,"%ld:%ld:%s:%s:%d:%s",IPMSG_VERSION,time(NULL),myHostName,myHostName,IPMSG_BR_EXIT,"");
+    sprintf(buffer,"%d:%ld:%s:%s:%d:%s",(int)IPMSG_VERSION,(long int)time(NULL),myHostName,myHostName,(int)IPMSG_BR_EXIT,"");
     if((sendBytes = sendto(brFd,buffer,strlen(buffer),0,
             (struct sockaddr*)&theirAddr,sizeof(struct sockaddr)))== -1){
         perror("br_exit:udp send msg failed!");
@@ -65,24 +66,30 @@ void br_exit_send(void){
 }
 //receive user online info
 void br_entry_rece(void){
+    char buffer[BUFSIZ];
     int receFd;
-    if((receFd = socket(AF_INET,SOCK_DGRAM,0) == -1)){
+    receFd = socket(AF_INET,SOCK_DGRAM,0);
+    if(receFd == -1){
         perror("br_entry_rece:udp socket create failed!");
     }
     struct sockaddr_in myAddr;
     int addr_len = sizeof(struct sockaddr_in);
     memset(&myAddr,0,sizeof(struct sockaddr_in));
     myAddr.sin_family = AF_INET;
-    myAddr.sin_port = RECV_PORT;
+    myAddr.sin_port = BR_PORT;
     myAddr.sin_addr.s_addr = htonl(INADDR_ANY);
     int ret;
-    ret = bind(receFd,(struct sockaddr_in*)&myAddr,sizeof(myAddr));
-    if(ret < 0){
+    ret = bind(receFd,(struct sockaddr*)&myAddr,sizeof(myAddr));
+    if(ret == -1){
         perror("br_entry_rece:udp bind failed!");
     }
+    int receBytes;
     while(1){
-        recvfrom(receFd,&buffer,sizeof(buffer),0,(struct sockaddr_in*)&myAddr,(socklen_t*)&addr_len);
-        printf("%s\n",buffer);
+        receBytes = recvfrom(receFd,&buffer,sizeof(buffer),0,(struct sockaddr*)&myAddr,(socklen_t*)&addr_len);
+        if(receBytes > 0){
+            buffer[receBytes] = '\0';
+            printf("%s\n",buffer);
+        }
     }
     close(receFd);
 }
