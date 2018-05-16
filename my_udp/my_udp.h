@@ -1,5 +1,7 @@
 #ifndef _MY_UDP_H
 #define _MY_UDP_H
 
-int udp_init();
+void br_entry_send(void);
+void br_exit_send(void);
+void br_entry_rece(void);
 #endif

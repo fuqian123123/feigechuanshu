@@ -13,7 +13,8 @@ static const char BR_ADDR[] = "10.18.23.255";
 static const int BR_PORT = 4001;
 static const int RECV_PORT = 4002;
 static char buffer[1024];
-void br_entry_send(){
+//user entry
+void br_entry_send(void){
     int brFd;
     if((brFd = socket(AF_INET,SOCK_DGRAM,0)) == -1){
         perror("br_entry:udp socket create failed!");
@@ -37,7 +38,8 @@ void br_entry_send(){
     printf("%d\n",sendBytes);
     close(brFd);
 }
-void br_exit_send(){
+//user exit
+void br_exit_send(void){
     int brFd;
     if((brFd = socket(AF_INET,SOCK_DGRAM,0)) == -1){
         perror("br_exit:udp socket create failed!");
@@ -61,8 +63,8 @@ void br_exit_send(){
     printf("%d\n",sendBytes);
     close(brFd);
 }
-
-void br_entry_rece(){
+//receive user online info
+void br_entry_rece(void){
     int receFd;
     if((receFd = socket(AF_INET,SOCK_DGRAM,0) == -1)){
         perror("br_entry_rece:udp socket create failed!");
