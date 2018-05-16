@@ -4,6 +4,6 @@
 
 int main(int argc,char* argv[]){
     br_entry_send();
-
+    br_exit_send();
     return 0;
 }    
