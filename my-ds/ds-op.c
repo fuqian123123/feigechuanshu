@@ -28,7 +28,14 @@ void uListItemDelete(IPMSG_USER* head,int s_addr){
         temp = temp->next;
     }
 }
-void uListDelete(IPMSG_USER* ul){
-    free(ul);
-    ul = NULL;
+void uListDelete(IPMSG_USER* head){
+    IPMSG_USER* nail = head->next;
+    while(nail != NULL){
+        IPMSG_USER* temp = nail;
+        nail = nail->next;
+        free(temp);
+        temp = NULL;
+    }
+    free(head);
+    head = NULL;
 }
