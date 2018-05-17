@@ -10,6 +10,7 @@
 #include <pwd.h>
 #include "../util/util.h"
 #include "../ipmsg.h"
+#include "../user/user.h"
 #include "udp-op.h"
 
 static const char BR_ADDR[] = "10.18.23.255";
@@ -28,7 +29,6 @@ void br_entry_send(void){
     struct sockaddr_in theirAddr;
     memset(&theirAddr,0,sizeof(struct sockaddr_in));
     theirAddr.sin_family = AF_INET;
-    //theirAddr.sin_addr.s_addr = inet_addr(BR_ADDR);
     theirAddr.sin_addr.s_addr = inet_addr(BR_ADDR);
     theirAddr.sin_port = htons(BR_PORT);
     int sendBytes;
@@ -106,9 +106,9 @@ void br_entry_rece(void){
             buffer[receBytes] = '\0';
             int ipmsg_v,ipmsg_flag;
             long int ipmsg_pack;
-            char* username,hostname,addtion;
-            sscanf(buffer,"%d:%ld:%s:%s:%d:%s",&ipmsg_v,&ipmsg_pack,username,hostname,addtion);
-            puts(inet_ntoa(fromwho.sin_addr));
+            char username[20],hostname[20],addtion[20];
+            sscanf(buffer,"%d:%ld:%s:%s:%d:%s",&ipmsg_v,&ipmsg_pack,username,hostname,&ipmsg_flag,addtion);
+            user_entry(username,hostname,inet_ntoa(fromwho.sin_addr));
         }
     }
     close(receFd);

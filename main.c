@@ -15,7 +15,11 @@ int main(int argc,char* argv[]){
     sleep(1);
     br_entry_send();
     br_exit_send();
-    //userlist_init();
-    while(1);
+    int i;
+    for(i = 0; i < 4; i++){
+        //user_printall();
+        sleep(1);
+    }
+    user_clear();
     return 0;
 }    
