@@ -1,7 +1,9 @@
 #include <string.h>
 #include <unistd.h>
 #include <pwd.h>
+#include <netdb.h>
 #include "ds-op.h"
+#include "../util/util.h"
 
 IPMSG_USER* userlist_ds_init(void){
     IPMSG_USER* head = (IPMSG_USER*)malloc(sizeof(IPMSG_USER));
@@ -12,6 +14,7 @@ IPMSG_USER* userlist_ds_init(void){
     pwd = getpwuid(getuid());
     strcpy(head->name,pwd->pw_name);
     gethostname(head->host,sizeof(head->host));
+    //get_ip_by_hostname(head->host);
     return head;
 }
 IPMSG_USER* userlist_ds_item_add(IPMSG_USER* cur,char* name,char* host,int s_addr){

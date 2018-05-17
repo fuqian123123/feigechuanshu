@@ -10,8 +10,8 @@
 #include "../ipmsg.h"
 #include "udp-op.h"
 
-//static const char BR_ADDR[] = "10.18.23.255";
-static const char BR_ADDR[] = "192.168.43.255";
+static const char BR_ADDR[] = "10.18.23.255";
+//static const char BR_ADDR[] = "192.168.43.255";
 static const int BR_PORT = 4001;
 static const int RECV_PORT = 4001;
 //user entry
@@ -26,6 +26,7 @@ void br_entry_send(void){
     struct sockaddr_in theirAddr;
     memset(&theirAddr,0,sizeof(struct sockaddr_in));
     theirAddr.sin_family = AF_INET;
+    //theirAddr.sin_addr.s_addr = inet_addr(BR_ADDR);
     theirAddr.sin_addr.s_addr = inet_addr(BR_ADDR);
     theirAddr.sin_port = htons(BR_PORT);
     int sendBytes;
@@ -77,11 +78,18 @@ void br_entry_rece(void){
     int set = 1;  
     setsockopt(receFd, SOL_SOCKET, SO_REUSEADDR, &set, sizeof(int)); 
     struct sockaddr_in server;
-    int addr_len = sizeof(struct sockaddr_in);
     memset(&server,0,sizeof(struct sockaddr_in));
     server.sin_family = AF_INET;
     server.sin_port = htons(RECV_PORT);
-    server.sin_addr.s_addr = INADDR_ANY;    
+    server.sin_addr.s_addr = INADDR_ANY; 
+
+    struct sockaddr_in fromwho;
+    int addr_len = sizeof(struct sockaddr_in);
+    memset(&fromwho,0,sizeof(struct sockaddr_in));
+    fromwho.sin_family = AF_INET;
+    fromwho.sin_port = htons(RECV_PORT);
+    fromwho.sin_addr.s_addr = INADDR_ANY;
+
     int ret;
     ret = bind(receFd,(struct sockaddr*)&server,sizeof(server));
     if(ret < 0){
@@ -90,10 +98,10 @@ void br_entry_rece(void){
     int receBytes;
     while(1){
         receBytes = recvfrom(receFd,buffer,sizeof(buffer),0,
-            (struct sockaddr*)&server,(socklen_t*)&addr_len);
+            (struct sockaddr*)&fromwho,(socklen_t*)&addr_len);
         if(receBytes > 0){
             buffer[receBytes] = '\0';
-            puts(buffer);
+            puts(inet_ntoa(fromwho.sin_addr));
         }
     }
     close(receFd);
