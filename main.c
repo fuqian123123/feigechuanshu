@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <unistd.h> 
-#include "./my_udp/my_udp.h"
+#include "./my-udp/my-udp.h"
 
 int main(int argc,char* argv[]){
     
