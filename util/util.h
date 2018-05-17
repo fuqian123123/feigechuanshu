@@ -3,6 +3,5 @@
 
 #include <stdio.h>
 
-char* get_host_name();
 
 #endif

@@ -6,6 +6,8 @@
 #include <string.h>
 #include <netinet/in.h>
 #include <stdbool.h>
+#include <arpa/inet.h>
+#include <pwd.h>
 #include "../util/util.h"
 #include "../ipmsg.h"
 #include "udp-op.h"
@@ -31,9 +33,10 @@ void br_entry_send(void){
     theirAddr.sin_port = htons(BR_PORT);
     int sendBytes;
     char myHostName[256];
+    struct passwd* pwd;
+    pwd = getpwuid(getuid());
     gethostname(myHostName,sizeof(myHostName));
-
-    sprintf(buffer,"%d:%ld:%s:%s:%d:%s",(int)IPMSG_VERSION,(long int)time(NULL),myHostName,myHostName,(int)IPMSG_BR_ENTRY,"");
+    sprintf(buffer,"%d:%ld:%s:%s:%d:%s",(int)IPMSG_VERSION,(long int)time(NULL),pwd->pw_name,myHostName,(int)IPMSG_BR_ENTRY,"");
     if((sendBytes = sendto(brFd,buffer,strlen(buffer),0,
             (struct sockaddr*)&theirAddr,sizeof(struct sockaddr)))== -1){
         perror("br_entry:udp send msg failed!");
@@ -101,6 +104,10 @@ void br_entry_rece(void){
             (struct sockaddr*)&fromwho,(socklen_t*)&addr_len);
         if(receBytes > 0){
             buffer[receBytes] = '\0';
+            int ipmsg_v,ipmsg_flag;
+            long int ipmsg_pack;
+            char* username,hostname,addtion;
+            sscanf(buffer,"%d:%ld:%s:%s:%d:%s",&ipmsg_v,&ipmsg_pack,username,hostname,addtion);
             puts(inet_ntoa(fromwho.sin_addr));
         }
     }

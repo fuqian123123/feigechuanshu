@@ -9,7 +9,7 @@ typedef struct userlist
 {
 	char name[20];	//用户名
 	char host[20];	//主机名
-	int s_addr;		//IP地址(32位网络字节序)
+	char s_addr[20];		//IP地址(32位网络字节序)
 	struct userlist *next;
 	struct userlist *pre;
 }IPMSG_USER;
@@ -27,7 +27,7 @@ typedef struct filelist
 }IPMSG_FILE;
 
 IPMSG_USER* userlist_ds_init(void);
-IPMSG_USER* userlist_ds_item_add(IPMSG_USER* cur,char* name,char* host,int s_addr);
-void userlist_ds_item_delete(IPMSG_USER* head,int s_addr);
+IPMSG_USER* userlist_ds_item_add(IPMSG_USER* cur,char* name,char* host,char* s_addr);
+void userlist_ds_item_delete(IPMSG_USER* head,char* s_addr);
 void userlist_ds_destory(IPMSG_USER* ul);
 #endif
