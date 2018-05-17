@@ -10,6 +10,7 @@
 #include "../ipmsg.h"
 #include "../my_udp/my_udp.h"
 
+//static const char BR_ADDR[] = "10.18.23.255";
 static const char BR_ADDR[] = "192.168.43.255";
 static const int BR_PORT = 4001;
 static const int RECV_PORT = 4001;
@@ -79,10 +80,10 @@ void br_entry_rece(void){
     int addr_len = sizeof(struct sockaddr_in);
     memset(&server,0,sizeof(struct sockaddr_in));
     server.sin_family = AF_INET;
-    server.sin_port = 2425;
+    server.sin_port = htons(RECV_PORT);
     server.sin_addr.s_addr = INADDR_ANY;    
     int ret;
-    ret = bind(receFd,(struct sockaddr*)&server,sizeof(struct sockaddr));
+    ret = bind(receFd,(struct sockaddr*)&server,sizeof(server));
     if(ret < 0){
         perror("br_entry_rece:udp bind failed!");
     }
@@ -90,10 +91,9 @@ void br_entry_rece(void){
     while(1){
         receBytes = recvfrom(receFd,buffer,sizeof(buffer),0,
             (struct sockaddr*)&server,(socklen_t*)&addr_len);
-        printf("hehe");
         if(receBytes > 0){
             buffer[receBytes] = '\0';
-            printf("%s\n",buffer);
+            puts(buffer);
         }
     }
     close(receFd);
