@@ -2,5 +2,5 @@
 #define _USER_H_
 
 #include <stdio.h>
-#include "../my-ds/"
+#include "../my-ds/ds-op.h"
 #endif
