@@ -1,6 +1,6 @@
 #include "ds-op.h"
 
-IPMSG_USER* uListInit(){
+IPMSG_USER* uListInit(void){
     IPMSG_USER* ul = (IPMSG_USER*)malloc(sizeof(IPMSG_USER));
     if(ul == NULL){
         perror("Userlist init error");
