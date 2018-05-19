@@ -14,7 +14,7 @@ int main(int argc,char* argv[]){
     pthread_detach(id1);
     sleep(1);
     br_entry_send();
-    br_exit_send();
+    //br_exit_send();
     int i;
     for(i = 0; i < 4; i++){
         //user_printall();

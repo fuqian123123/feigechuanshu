@@ -13,8 +13,8 @@
 #include "../user/user.h"
 #include "udp-op.h"
 
-static const char BR_ADDR[] = "10.18.23.255";
-//static const char BR_ADDR[] = "192.168.43.255";
+//static const char BR_ADDR[] = "10.18.23.255";
+static const char BR_ADDR[] = "192.168.43.255";
 static const int BR_PORT = 4001;
 static const int RECV_PORT = 4001;
 //user entry
@@ -104,10 +104,11 @@ void br_entry_rece(void){
             (struct sockaddr*)&fromwho,(socklen_t*)&addr_len);
         if(receBytes > 0){
             buffer[receBytes] = '\0';
-            int ipmsg_v,ipmsg_flag;
-            long int ipmsg_pack;
-            char username[20],hostname[20],addtion[20];
-            sscanf(buffer,"%d:%ld:%s:%s:%d:%s",&ipmsg_v,&ipmsg_pack,username,hostname,&ipmsg_flag,addtion);
+            char ipmsg_v[20],ipmsg_flag[20],ipmsg_pack[20],username[20],hostname[25],addtion[20];
+            sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%s",ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
+            puts(buffer);
+            puts(username);
+            puts(hostname);
             user_entry(username,hostname,inet_ntoa(fromwho.sin_addr));
         }
     }

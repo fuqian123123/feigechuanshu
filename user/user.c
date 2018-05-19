@@ -25,8 +25,9 @@ void user_entry(char* name,char* host,char* s_addr){
 void user_printall(void){
     IPMSG_USER* temp = ul_head_addr;
     while(temp != NULL){
-        printf("%s\t%s\t\n",temp->name,temp->host);
+        printf("%s\t%s\t",temp->name,temp->host);
         temp = temp->next;
+        printf("\n");
     }
 }
 //clear all user
