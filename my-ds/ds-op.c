@@ -37,10 +37,10 @@ void userlist_ds_item_delete(IPMSG_USER* head,char* s_addr){
     }
 }
 void userlist_ds_destory(IPMSG_USER* head){
-    IPMSG_USER* nail = head->next;
-    while(nail != NULL){
-        IPMSG_USER* temp = nail;
-        nail = nail->next;
+    IPMSG_USER* tail = head->next;
+    while(tail != NULL){
+        IPMSG_USER* temp = tail;
+        tail = tail->next;
         free(temp);
         temp = NULL;
     }
