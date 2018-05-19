@@ -16,9 +16,9 @@ int main(int argc,char* argv[]){
     br_entry_send();
     //br_exit_send();
     int i;
-    for(i = 0; i < 4; i++){
-        //user_printall();
-        sleep(1);
+    for(i = 0; i < 2; i++){
+        user_printall();
+        sleep(5);
     }
     user_clear();
     return 0;

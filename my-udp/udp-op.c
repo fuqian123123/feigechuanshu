@@ -106,11 +106,11 @@ void br_entry_rece(void){
             buffer[receBytes] = '\0';
             char ipmsg_v[20],ipmsg_flag[20],ipmsg_pack[20],username[20],hostname[25],addtion[20];
             sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%s",ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
-            puts(buffer);
-            puts(username);
-            puts(hostname);
-            user_entry(username,hostname,inet_ntoa(fromwho.sin_addr));
+            if(IPMSG_BR_ENTRY == (ipmsg_flag[0] - '0')){
+                user_entry(username,hostname,inet_ntoa(fromwho.sin_addr));
+            }
         }
+        receBytes = 0;
     }
     close(receFd);
 }

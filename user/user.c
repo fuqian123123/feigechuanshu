@@ -24,8 +24,9 @@ void user_entry(char* name,char* host,char* s_addr){
 //print all user
 void user_printall(void){
     IPMSG_USER* temp = ul_head_addr;
+    printf("%-20s%-20s%-20s\n","username","hostname","ip");
     while(temp != NULL){
-        printf("%s\t%s\t",temp->name,temp->host);
+        printf("%-20s%-20s%-20s",temp->name,temp->host,temp->s_addr);
         temp = temp->next;
         printf("\n");
     }
