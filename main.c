@@ -17,8 +17,11 @@ int main(int argc,char* argv[]){
     //br_exit_send();
     int i;
     for(i = 0; i < 2; i++){
+        if(i == 1){
+            user_exit("10.22.116.66");
+        }
         user_printall();
-        sleep(5);
+        sleep(3);
     }
     user_clear();
     return 0;

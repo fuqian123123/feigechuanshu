@@ -21,6 +21,10 @@ void user_entry(char* name,char* host,char* s_addr){
         user_init(name,host,s_addr);
     }
 }
+//delete user
+void user_exit(char* s_addr){
+    ul_head_addr = userlist_ds_item_delete(ul_head_addr,s_addr);
+}
 //print all user
 void user_printall(void){
     IPMSG_USER* temp = ul_head_addr;
