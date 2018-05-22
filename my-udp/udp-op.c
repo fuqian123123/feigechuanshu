@@ -39,9 +39,11 @@ void br_entry_send(void){
     struct passwd* pwd;
     pwd = getpwuid(getuid());
     gethostname(myHostName,sizeof(myHostName));
-    sprintf(buffer,"%d:%ld:%s:%s:%d:%s",(int)IPMSG_VERSION,(long int)time(NULL),pwd->pw_name,myHostName,(int)IPMSG_BR_ENTRY,"");
-    if((sendBytes = sendto(br_fd,buffer,strlen(buffer),0,
-            (struct sockaddr*)&theirAddr,sizeof(struct sockaddr)))== -1){
+    sprintf(buffer,"%d:%ld:%s:%s:%d:%s",(int)IPMSG_VERSION,
+        (long int)time(NULL),pwd->pw_name,myHostName,(int)IPMSG_BR_ENTRY,"");
+    sendBytes = sendto(br_fd,buffer,strlen(buffer),0,
+        (struct sockaddr*)&theirAddr,sizeof(struct sockaddr));
+    if(sendBytes== -1){
         perror("br_entry:udp send msg failed!");
     }
     close(br_fd);
@@ -50,7 +52,8 @@ void br_entry_send(void){
 void br_exit_send(void){
     int br_fd;
     char buffer[BUFSIZ];
-    if((br_fd = socket(AF_INET,SOCK_DGRAM,0)) == -1){
+    br_fd = socket(AF_INET,SOCK_DGRAM,0);
+    if(br_fd == -1){
         perror("br_exit:udp socket create failed!");
     }
     int optval = 1;
@@ -65,9 +68,11 @@ void br_exit_send(void){
     gethostname(myHostName,sizeof(myHostName));
     struct passwd* pwd;
     pwd = getpwuid(getuid());
-    sprintf(buffer,"%d:%ld:%s:%s:%d:%s",(int)IPMSG_VERSION,(long int)time(NULL),pwd->pw_name,myHostName,(int)IPMSG_BR_EXIT,"");
-    if((sendBytes = sendto(br_fd,buffer,strlen(buffer),0,
-            (struct sockaddr*)&theirAddr,sizeof(struct sockaddr)))== -1){
+    sprintf(buffer,"%d:%ld:%s:%s:%d:%s",(int)IPMSG_VERSION,
+        (long int)time(NULL),pwd->pw_name,myHostName,(int)IPMSG_BR_EXIT,"");
+    sendBytes = sendto(br_fd,buffer,strlen(buffer),0,
+        (struct sockaddr*)&theirAddr,sizeof(struct sockaddr));
+    if(sendBytes == -1){
         perror("br_exit:udp send msg failed!");
     }
     close(br_fd);
@@ -107,7 +112,8 @@ void br_entry_rece(void){
         if(receBytes > 0){
             buffer[receBytes] = '\0';
             char ipmsg_v[20],ipmsg_flag[20],ipmsg_pack[20],username[20],hostname[25],addtion[20];
-            sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%s",ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
+            sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%s",
+                ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
             //receive user entry message
             if(IPMSG_BR_ENTRY == (ipmsg_flag[0] - '0')){
                 user_entry(username,hostname,inet_ntoa(fromwho.sin_addr));
