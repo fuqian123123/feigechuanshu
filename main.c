@@ -14,15 +14,17 @@ int main(int argc,char* argv[]){
     pthread_detach(id1);
     sleep(1);
     br_entry_send();
-    //br_exit_send();
+             sleep(1);
+
     int i;
-    for(i = 0; i < 2; i++){
-        if(i == 1){
-            user_exit("10.22.116.66");
-        }
-        user_printall();
-        sleep(3);
+    for(i = 0; i < 3; i++){
+         user_printall();
+         sleep(1);
     }
+    br_exit_send();
+    sleep(1);
+    user_printall();
+
     user_clear();
     return 0;
 }    
