@@ -127,7 +127,7 @@ void br_entry_rece(void){
     }
     close(rece_fd);
 }
-void uni_answer_entry(char* s_addr,int port){
+void uni_answer_entry_send(char* s_addr,int port){
     int ret;
     int uni_fd;
     char buffer[BUFSIZ];
@@ -150,4 +150,7 @@ void uni_answer_entry(char* s_addr,int port){
     if(sendBytes == -1){
         perror("uni_answer_entry error");
     }
+}
+void uni_answer_entry_rece(){
+    
 }
