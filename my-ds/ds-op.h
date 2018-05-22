@@ -27,7 +27,7 @@ typedef struct filelist
 }IPMSG_FILE;
 
 IPMSG_USER* userlist_ds_init(void);
-IPMSG_USER* userlist_ds_item_add(IPMSG_USER* cur,char* name,char* host,char* s_addr);
+void userlist_ds_item_add(IPMSG_USER* cur,char* name,char* host,char* s_addr);
 IPMSG_USER* userlist_ds_item_delete(IPMSG_USER* uhead,char* s_addr);
 void userlist_ds_destory(IPMSG_USER* ul);
 #endif

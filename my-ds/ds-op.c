@@ -12,17 +12,22 @@ IPMSG_USER* userlist_ds_init(void){
     }
     return head;
 }
-IPMSG_USER* userlist_ds_item_add(IPMSG_USER* cur,char* name,char* host,char* s_addr){
-    IPMSG_USER* next = (IPMSG_USER*)malloc(sizeof(IPMSG_USER));
-    if(next == NULL){
-        perror("Add user error");
+void userlist_ds_item_add(IPMSG_USER* head,char* name,char* host,char* s_addr){
+    if(head != NULL){
+        IPMSG_USER* temp = head;
+        while(temp->next != NULL){
+            temp = temp->next;
+        }
+        IPMSG_USER* next = (IPMSG_USER*)malloc(sizeof(IPMSG_USER));
+        if(next == NULL){
+            perror("userlist_ds_item_add error");
+        }
+        strcpy(next->name,name);
+        strcpy(next->host,host);
+        strcpy(next->s_addr,s_addr);
+        next->pre = temp;
+        temp->next = next;
     }
-    strcpy(next->name,name);
-    strcpy(next->host,host);
-    strcpy(next->s_addr,s_addr);
-    next->pre = cur;
-    cur->next = next;
-    return next;
 }
 IPMSG_USER* userlist_ds_item_delete(IPMSG_USER* uhead,char* s_addr){
     if(!strcmp(uhead->s_addr,s_addr)){
