@@ -127,3 +127,27 @@ void br_entry_rece(void){
     }
     close(rece_fd);
 }
+void uni_answer_entry(char* s_addr,int port){
+    int ret;
+    int uni_fd;
+    char buffer[BUFSIZ];
+
+    uni_fd = socket(PF_INET,SOCK_DGRAM,0); 
+    struct sockaddr_in target;
+    memset(&target,0,sizeof(target));
+    target.sin_family = AF_INET;
+    target.sin_port = htons(port);
+    target.sin_addr.s_addr = inet_addr(s_addr);
+
+    char myHostName[256];
+    struct passwd* pwd;
+    pwd = getpwuid(getuid());
+    gethostname(myHostName,sizeof(myHostName));
+
+    sprintf(buffer,"%d:%ld:%s:%s:%d:%s",(int)IPMSG_VERSION,(long int)time(NULL),pwd->pw_name,myHostName,(int)IPMSG_ANSENTRY,"");
+    int sendBytes;
+    sendBytes = sendto(uni_fd,buffer,strlen(buffer),0,(struct sockaddr*)&target,sizeof(target));
+    if(sendBytes == -1){
+        perror("uni_answer_entry error");
+    }
+}
