@@ -1,9 +1,6 @@
 #include <stdio.h>
-#include <pthread.h>
-#include <unistd.h> 
-#include "./my-udp/udp-op.h"
-#include "./my-tcp/tcp-op.h"
-#include "./user/user.h"
+#include <unistd.h>
+#include "./util/util.h"
 
 int main(int argc,char* argv[]){
     // int ret;
@@ -43,7 +40,7 @@ int main(int argc,char* argv[]){
     // sleep(1);
     // tcp_msg_send("127.0.0.1");
     //while(1);
-
-    menu_print();
+    main_init();
+    while(1);
     return 0;
 }    
