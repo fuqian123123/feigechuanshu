@@ -156,6 +156,7 @@ void uni_answer_entry_send(char* s_addr,int port){
     if(sendBytes == -1){
         perror("uni_answer_entry error");
     }
+    close(uni_fd);
 }
 void uni_answer_entry_rece(){
     char buffer[BUFSIZ];
@@ -199,4 +200,5 @@ void uni_answer_entry_rece(){
             }
         }
     }
+    close(rece_fd);
 }
