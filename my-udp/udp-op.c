@@ -79,12 +79,12 @@ void br_exit_send(void){
     close(br_fd);
 }
 //receive user online info
-void br_entry_rece(void){
+void br_rece(void){
     char buffer[BUFSIZ];
     int rece_fd;
     rece_fd = socket(AF_INET,SOCK_DGRAM,0);
     if(rece_fd == -1){
-        perror("br_entry_rece:udp socket create failed!");
+        perror("br_rece:udp socket create failed!");
     }
     int set = 1;  
     setsockopt(rece_fd, SOL_SOCKET, SO_REUSEADDR, &set, sizeof(int)); 
@@ -104,7 +104,7 @@ void br_entry_rece(void){
     int ret;
     ret = bind(rece_fd,(struct sockaddr*)&server,sizeof(server));
     if(ret < 0){
-        perror("br_entry_rece:udp bind failed!");
+        perror("br_rece:udp bind failed!");
     }
     int receBytes;
     while(1){

@@ -7,7 +7,7 @@
 int main(int argc,char* argv[]){
     int ret;
     pthread_t id1,id2;
-    ret = pthread_create(&id1,NULL,(void*)br_entry_rece,NULL);
+    ret = pthread_create(&id1,NULL,(void*)br_rece,NULL);
     if(ret){
         perror("id1 created failed!");
     }
