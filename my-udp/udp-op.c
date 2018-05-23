@@ -14,8 +14,9 @@
 #include "udp-op.h"
 
 //static const char BR_ADDR[] = "10.18.23.255";
-static const char BR_ADDR[] = "10.22.255.255";
-//static const char BR_ADDR[] = "192.168.43.255";
+//static const char BR_ADDR[] = "172.20.10.15";
+//static const char BR_ADDR[] = "10.22.255.255";
+static const char BR_ADDR[] = "192.168.43.255";
 static const int BR_PORT = 4001;
 static const int BR_RECV_PORT = 4001;
 static const int UNI_PORT = 4003;
@@ -78,12 +79,12 @@ void br_exit_send(void){
     close(br_fd);
 }
 //receive user online info
-void br_entry_rece(void){
+void br_rece(void){
     char buffer[BUFSIZ];
     int rece_fd;
     rece_fd = socket(AF_INET,SOCK_DGRAM,0);
     if(rece_fd == -1){
-        perror("br_entry_rece:udp socket create failed!");
+        perror("br_rece:udp socket create failed!");
     }
     int set = 1;  
     setsockopt(rece_fd, SOL_SOCKET, SO_REUSEADDR, &set, sizeof(int)); 
@@ -103,7 +104,7 @@ void br_entry_rece(void){
     int ret;
     ret = bind(rece_fd,(struct sockaddr*)&server,sizeof(server));
     if(ret < 0){
-        perror("br_entry_rece:udp bind failed!");
+        perror("br_rece:udp bind failed!");
     }
     int receBytes;
     while(1){
@@ -116,12 +117,16 @@ void br_entry_rece(void){
                 ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
             //receive user entry message
             if(IPMSG_BR_ENTRY == (ipmsg_flag[0] - '0')){
-                user_entry(username,hostname,inet_ntoa(fromwho.sin_addr));
+                if(!user_is_existed(inet_ntoa(fromwho.sin_addr))){
+                    user_entry(username,hostname,inet_ntoa(fromwho.sin_addr));
+                }
                 uni_answer_entry_send(inet_ntoa(fromwho.sin_addr),UNI_PORT);
             }
             //receive user exit message
             if(IPMSG_BR_EXIT == (ipmsg_flag[0] - '0')){
-                user_exit(inet_ntoa(fromwho.sin_addr));
+                if(user_is_existed(inet_ntoa(fromwho.sin_addr))){
+                    user_exit(inet_ntoa(fromwho.sin_addr));
+                }
             }
         }
         receBytes = 0;
@@ -149,10 +154,10 @@ void uni_answer_entry_send(char* s_addr,int port){
         (int)IPMSG_VERSION,(long int)time(NULL),pwd->pw_name,myHostName,(int)IPMSG_ANSENTRY,"caonima");
     int sendBytes;
     sendBytes = sendto(uni_fd,buffer,strlen(buffer),0,(struct sockaddr*)&target,sizeof(target));
-    printf("%d\n",sendBytes);
     if(sendBytes == -1){
         perror("uni_answer_entry error");
     }
+    close(uni_fd);
 }
 void uni_answer_entry_rece(){
     char buffer[BUFSIZ];
@@ -185,7 +190,16 @@ void uni_answer_entry_rece(){
     while(1){
         receBytes = recvfrom(rece_fd,buffer,sizeof(buffer),0,
                 (struct sockaddr*)&fromwho,(socklen_t*)&addr_len);
-        if(receBytes > 0)
-            puts(buffer);
+        if(receBytes > 0){
+            char ipmsg_v[20],ipmsg_flag[20],ipmsg_pack[20],username[20],hostname[25],addtion[20];
+            sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%s",
+                ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
+            if(IPMSG_ANSENTRY == (ipmsg_flag[0] - '0')){
+                if(!user_is_existed(inet_ntoa(fromwho.sin_addr))){
+                    user_entry(username,hostname,inet_ntoa(fromwho.sin_addr));
+                }
+            }
+        }
     }
+    close(rece_fd);
 }

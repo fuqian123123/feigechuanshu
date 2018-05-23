@@ -7,7 +7,7 @@
 int main(int argc,char* argv[]){
     int ret;
     pthread_t id1,id2;
-    ret = pthread_create(&id1,NULL,(void*)br_entry_rece,NULL);
+    ret = pthread_create(&id1,NULL,(void*)br_rece,NULL);
     if(ret){
         perror("id1 created failed!");
     }
@@ -23,12 +23,12 @@ int main(int argc,char* argv[]){
 
     int i;
      for(i = 0; i < 10; i++){
-          //user_printall();
+          user_printall();
           sleep(1);
      }
     br_exit_send();
     sleep(1);
-    //user_printall();
+    user_printall();
 
     user_clear();
     return 0;
