@@ -33,15 +33,17 @@ int main(int argc,char* argv[]){
 
     // user_clear();
 
-    int ret;
-    pthread_t id1;
-    ret = pthread_create(&id1,NULL,(void*)tcp_msg_rece,NULL);
-    if(ret){
-        perror("id1 created failed!");
-    }
-    pthread_detach(id1);
-    sleep(1);
-    tcp_msg_send("127.0.0.1");
-    while(1);
+    // int ret;
+    // pthread_t id1;
+    // ret = pthread_create(&id1,NULL,(void*)tcp_msg_rece,NULL);
+    // if(ret){
+    //     perror("id1 created failed!");
+    // }
+    // pthread_detach(id1);
+    // sleep(1);
+    // tcp_msg_send("127.0.0.1");
+    //while(1);
+
+    menu_print();
     return 0;
 }    
