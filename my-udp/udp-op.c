@@ -117,6 +117,7 @@ void br_entry_rece(void){
             //receive user entry message
             if(IPMSG_BR_ENTRY == (ipmsg_flag[0] - '0')){
                 user_entry(username,hostname,inet_ntoa(fromwho.sin_addr));
+                uni_answer_entry_send(inet_ntoa(fromwho.sin_addr),UNI_PORT);
             }
             //receive user exit message
             if(IPMSG_BR_EXIT == (ipmsg_flag[0] - '0')){
@@ -144,13 +145,47 @@ void uni_answer_entry_send(char* s_addr,int port){
     pwd = getpwuid(getuid());
     gethostname(myHostName,sizeof(myHostName));
 
-    sprintf(buffer,"%d:%ld:%s:%s:%d:%s",(int)IPMSG_VERSION,(long int)time(NULL),pwd->pw_name,myHostName,(int)IPMSG_ANSENTRY,"");
+    sprintf(buffer,"%d:%ld:%s:%s:%d:%s",
+        (int)IPMSG_VERSION,(long int)time(NULL),pwd->pw_name,myHostName,(int)IPMSG_ANSENTRY,"caonima");
     int sendBytes;
     sendBytes = sendto(uni_fd,buffer,strlen(buffer),0,(struct sockaddr*)&target,sizeof(target));
+    printf("%d\n",sendBytes);
     if(sendBytes == -1){
         perror("uni_answer_entry error");
     }
 }
 void uni_answer_entry_rece(){
-    
+    char buffer[BUFSIZ];
+    int rece_fd;
+    rece_fd = socket(PF_INET,SOCK_DGRAM,0);
+    if(rece_fd == -1){
+        perror("uni_answer_entry_rece:udp socket create failed!");
+    }
+    int set = 1;  
+    setsockopt(rece_fd, SOL_SOCKET, SO_REUSEADDR, &set, sizeof(int)); 
+    struct sockaddr_in server;
+    memset(&server,0,sizeof(struct sockaddr_in));
+    server.sin_family = AF_INET;
+    server.sin_port = htons(UNI_RECV_PORT);
+    server.sin_addr.s_addr = INADDR_ANY; 
+
+    struct sockaddr_in fromwho;
+    int addr_len = sizeof(struct sockaddr_in);
+    memset(&fromwho,0,sizeof(struct sockaddr_in));
+    fromwho.sin_family = AF_INET;
+    fromwho.sin_port = htons(UNI_RECV_PORT);
+    fromwho.sin_addr.s_addr = INADDR_ANY;
+
+    int ret;
+    ret = bind(rece_fd,(struct sockaddr*)&server,sizeof(server));
+    if(ret < 0){
+        perror("uni_answer_entry_rece:udp bind failed!");
+    }
+    int receBytes;
+    while(1){
+        receBytes = recvfrom(rece_fd,buffer,sizeof(buffer),0,
+                (struct sockaddr*)&fromwho,(socklen_t*)&addr_len);
+        if(receBytes > 0)
+            puts(buffer);
+    }
 }
