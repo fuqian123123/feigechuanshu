@@ -50,9 +50,9 @@ IPMSG_USER* userlist_ds_item_delete(IPMSG_USER* uhead,char* s_addr){
         }
         else{
             if(!strcmp(temp->s_addr,s_addr)){
+                temp->pre->next = NULL;
                 free(temp);
                 temp = NULL;
-                temp->pre->next = NULL;
                 return uhead;
             }
         }
