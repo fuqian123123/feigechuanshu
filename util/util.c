@@ -26,8 +26,8 @@ void listen_input(){
     while(1){
         printf("\t\t%-20s\n","Please input your command:");
         gets(buffer);
-        if(!strcmp(buffer,)){
+        // if(!strcmp(buffer,)){
 
-        }
+        // }
     }
 }
