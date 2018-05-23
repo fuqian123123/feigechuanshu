@@ -6,6 +6,7 @@
 
 void user_init(char* name,char* host,char* s_addr);
 void user_entry(char* name,char* host,char* s_addr);
+void user_exit(char* s_addr);
 void user_printall(void);
 void user_clear(void);
 #endif
