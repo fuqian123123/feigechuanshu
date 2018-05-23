@@ -116,12 +116,16 @@ void br_entry_rece(void){
                 ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
             //receive user entry message
             if(IPMSG_BR_ENTRY == (ipmsg_flag[0] - '0')){
-                user_entry(username,hostname,inet_ntoa(fromwho.sin_addr));
+                if(!user_is_existed(inet_ntoa(fromwho.sin_addr))){
+                    user_entry(username,hostname,inet_ntoa(fromwho.sin_addr));
+                }
                 uni_answer_entry_send(inet_ntoa(fromwho.sin_addr),UNI_PORT);
             }
             //receive user exit message
             if(IPMSG_BR_EXIT == (ipmsg_flag[0] - '0')){
-                user_exit(inet_ntoa(fromwho.sin_addr));
+                if(user_is_existed(inet_ntoa(fromwho.sin_addr))){
+                    user_exit(inet_ntoa(fromwho.sin_addr));
+                }
             }
         }
         receBytes = 0;
@@ -149,7 +153,6 @@ void uni_answer_entry_send(char* s_addr,int port){
         (int)IPMSG_VERSION,(long int)time(NULL),pwd->pw_name,myHostName,(int)IPMSG_ANSENTRY,"caonima");
     int sendBytes;
     sendBytes = sendto(uni_fd,buffer,strlen(buffer),0,(struct sockaddr*)&target,sizeof(target));
-    printf("%d\n",sendBytes);
     if(sendBytes == -1){
         perror("uni_answer_entry error");
     }
@@ -185,7 +188,15 @@ void uni_answer_entry_rece(){
     while(1){
         receBytes = recvfrom(rece_fd,buffer,sizeof(buffer),0,
                 (struct sockaddr*)&fromwho,(socklen_t*)&addr_len);
-        if(receBytes > 0)
-            puts(buffer);
+        if(receBytes > 0){
+            char ipmsg_v[20],ipmsg_flag[20],ipmsg_pack[20],username[20],hostname[25],addtion[20];
+            sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%s",
+                ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
+            if(IPMSG_ANSENTRY == (ipmsg_flag[0] - '0')){
+                if(!user_is_existed(inet_ntoa(fromwho.sin_addr))){
+                    user_entry(username,hostname,inet_ntoa(fromwho.sin_addr));
+                }
+            }
+        }
     }
 }
