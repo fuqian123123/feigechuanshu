@@ -36,7 +36,7 @@ void main_init(){
         perror("id1 created failed!");
     }
     pthread_detach(id1);
-    ret = pthread_create(&id2,NULL,(void*)uni_answer_entry_rece,NULL);
+    ret = pthread_create(&id2,NULL,(void*)uni_rece,NULL);
     if(ret){
         perror("id2 created failed!");
     }

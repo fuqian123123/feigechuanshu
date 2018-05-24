@@ -162,12 +162,12 @@ void uni_answer_entry_send(char* s_addr,int port){
     }
     close(uni_fd);
 }
-void uni_answer_entry_rece(){
+void uni_rece(){
     char buffer[BUFSIZ];
     int rece_fd;
     rece_fd = socket(PF_INET,SOCK_DGRAM,0);
     if(rece_fd == -1){
-        perror("uni_answer_entry_rece:udp socket create error");
+        perror("uni_rece:udp socket create error");
     }
     int set = 1;  
     setsockopt(rece_fd, SOL_SOCKET, SO_REUSEADDR, &set, sizeof(int)); 
@@ -187,7 +187,7 @@ void uni_answer_entry_rece(){
     int ret;
     ret = bind(rece_fd,(struct sockaddr*)&server,sizeof(server));
     if(ret < 0){
-        perror("uni_answer_entry_rece:udp bind error");
+        perror("uni_rece:udp bind error");
     }
     int receBytes;
     while(1){
