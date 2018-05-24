@@ -16,8 +16,8 @@
 
 //static const char BR_ADDR[] = "10.18.23.255";
 //static const char BR_ADDR[] = "172.20.10.15";
-static const char BR_ADDR[] = "10.22.255.255";
-//static const char BR_ADDR[] = "192.168.43.255";
+//static const char BR_ADDR[] = "10.22.255.255";
+static const char BR_ADDR[] = "192.168.43.255";
 static const int BR_PORT = 4001;
 static const int BR_RECV_PORT = 4001;
 static const int UNI_PORT = 4003;
