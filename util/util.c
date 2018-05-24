@@ -14,6 +14,7 @@
 #include "../my-udp/udp-op.h"
 #include "../my-tcp/tcp-op.h"
 
+#define COM_SIZ 80
 static const char command1[] = "ls";
 static const char command2[] = "chat ";
 static const char command3[] = "file ";
@@ -56,14 +57,14 @@ void main_exit(){
     user_clear();
 }
 void listen_input(){
-    char buffer[BUFSIZ];
+    char buffer[COM_SIZ];
     while(1){
         printf("\t%-20s\n\t","Please input your command:");
-        gets(buffer);
-        if(!strcmp(buffer,command1)){
+        fgets(buffer,COM_SIZ,stdin);
+        if(!strncmp(buffer,command1,strlen(buffer)-1)){
             user_printall();
         }
-        else if(!strcmp(buffer,command4)){
+        else if(!strncmp(buffer,command4,strlen(buffer)-1)){
             main_exit();
             exit(0);
         }
