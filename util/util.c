@@ -39,7 +39,6 @@ void username_get(void){
         }
     }while(!flag);
     fflush(stdin);
-    fflush(stdout);
 }
 void menu_print(void){
     fprintf(stdout,"\t****************************************\n");
@@ -79,6 +78,7 @@ void main_exit(void){
 }
 void listen_input(void){
     char buffer[COM_SIZ];
+    setbuf(stdin,NULL);
     while(1){
         printf("\t%-20s\n\t","Please input your command:");
         fgets(buffer,COM_SIZ,stdin);
