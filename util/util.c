@@ -23,11 +23,11 @@ static const char command4[] = "exit";
 void username_get(void){
     int u_len,flag;
     do{
-        printf("Please input your nickname(1~20):");
+        printf("Please input your username(1~20):");
         fgets(USERNAME,USERNAME_SIZ + 1,stdin);
         u_len = strlen(USERNAME);
         if(USERNAME[0] == '\n'){
-            printf("Your nickname cannot be empty,try again.\n");
+            printf("Your username cannot be empty,try again.\n");
         }
         else if(USERNAME[u_len-1] == '\n'){
             USERNAME[u_len-1] = '\0';
