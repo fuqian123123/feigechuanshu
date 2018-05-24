@@ -14,7 +14,7 @@
 #include "../my-udp/udp-op.h"
 #include "../my-tcp/tcp-op.h"
 
-char USERNAME[UESRNAME_SIZ] = "";
+char USERNAME[USERNAME_SIZ] = "";
 static const char command1[] = "ls";
 static const char command2[] = "chat ";
 static const char command3[] = "file ";
@@ -23,18 +23,18 @@ static const char command4[] = "exit";
 void username_get(void){
     int u_len,flag;
     do{
-        printf("Please input your username(1~20):");
-        fgets(USERNAME,UESRNAME_SIZ + 1,stdin);
+        printf("Please input your nickname(1~20):");
+        fgets(USERNAME,USERNAME_SIZ + 1,stdin);
         u_len = strlen(USERNAME);
         if(USERNAME[0] == '\n'){
-            printf("Your username cannot be empty,try again.\n");
+            printf("Your nickname cannot be empty,try again.\n");
         }
         else if(USERNAME[u_len-1] == '\n'){
             USERNAME[u_len-1] = '\0';
             flag = 1;
         }
         else{
-            USERNAME[UESRNAME_SIZ] = '\0';
+            USERNAME[USERNAME_SIZ] = '\0';
             flag = 1;
         }
     }while(!flag);

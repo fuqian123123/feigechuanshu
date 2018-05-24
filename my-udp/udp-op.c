@@ -61,7 +61,7 @@ void br_send(int flag){
     {
         case BR_ENTRY_FLAG:
             sprintf(buffer,"%d:%ld:%s:%s:%d:%s",(int)IPMSG_VERSION,
-                (long int)time(NULL),pwd->pw_name,myHostName,(int)IPMSG_BR_ENTRY,"");
+                (long int)time(NULL),pwd->pw_name,myHostName,(int)IPMSG_BR_ENTRY,USERNAME);
             break;
         case BR_EXIT_FLAG:
             sprintf(buffer,"%d:%ld:%s:%s:%d:%s",(int)IPMSG_VERSION,
@@ -118,9 +118,10 @@ void br_rece(void){
             sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%s",
                 ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
             //receive user entry message
+            //username is in addtion
             if(IPMSG_BR_ENTRY == (ipmsg_flag[0] - '0')){
                 if(!user_is_existed(inet_ntoa(fromwho.sin_addr))){
-                    user_entry(username,hostname,inet_ntoa(fromwho.sin_addr));
+                    user_entry(addtion,hostname,inet_ntoa(fromwho.sin_addr));
                 }
                 uni_answer_entry_send(inet_ntoa(fromwho.sin_addr),UNI_PORT);
             }
