@@ -14,13 +14,34 @@
 #include "../my-udp/udp-op.h"
 #include "../my-tcp/tcp-op.h"
 
-#define COM_SIZ 80
+char USERNAME[UESRNAME_SIZ] = "";
 static const char command1[] = "ls";
 static const char command2[] = "chat ";
 static const char command3[] = "file ";
 static const char command4[] = "exit";
 
-void menu_print(){
+void username_get(void){
+    int u_len,flag;
+    do{
+        printf("Please input your username(1~20):");
+        fgets(USERNAME,UESRNAME_SIZ + 1,stdin);
+        u_len = strlen(USERNAME);
+        if(USERNAME[0] == '\n'){
+            printf("Your username cannot be empty,try again.\n");
+        }
+        else if(USERNAME[u_len-1] == '\n'){
+            USERNAME[u_len-1] = '\0';
+            flag = 1;
+        }
+        else{
+            USERNAME[UESRNAME_SIZ] = '\0';
+            flag = 1;
+        }
+    }while(!flag);
+    fflush(stdin);
+    fflush(stdout);
+}
+void menu_print(void){
     fprintf(stdout,"\t****************************************\n");
     printf("\t\t%-20s\n","1.ls");
     printf("\t\t%-20s\n","2.chat with sb.");
@@ -28,7 +49,7 @@ void menu_print(){
     printf("\t\t%-20s\n","4.exit");
     fprintf(stdout,"\t****************************************\n");
 }
-void main_init(){
+void main_init(void){
     int ret;
     pthread_t id1,id2,id3;
     ret = pthread_create(&id1,NULL,(void*)br_rece,NULL);
@@ -52,11 +73,11 @@ void main_init(){
     }
     pthread_detach(id3);
 }
-void main_exit(){
+void main_exit(void){
     br_exit_send();
     user_clear();
 }
-void listen_input(){
+void listen_input(void){
     char buffer[COM_SIZ];
     while(1){
         printf("\t%-20s\n\t","Please input your command:");

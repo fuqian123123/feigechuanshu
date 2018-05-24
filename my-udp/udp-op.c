@@ -90,8 +90,6 @@ void br_exit_send(void){
 void br_rece(void){
     char buffer[BUFSIZ];
     int rece_fd = get_br_sock_fd();
-    //int set = 1;  
-    //setsockopt(rece_fd, SOL_SOCKET, SO_REUSEADDR, &set, sizeof(int)); 
     struct sockaddr_in server;
     memset(&server,0,sizeof(struct sockaddr_in));
     server.sin_family = AF_INET;
