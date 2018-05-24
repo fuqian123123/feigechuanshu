@@ -154,7 +154,7 @@ void uni_answer_entry_send(char* s_addr,int port){
     gethostname(myHostName,sizeof(myHostName));
 
     sprintf(buffer,"%d:%ld:%s:%s:%d:%s",
-        (int)IPMSG_VERSION,(long int)time(NULL),pwd->pw_name,myHostName,(int)IPMSG_ANSENTRY,"");
+        (int)IPMSG_VERSION,(long int)time(NULL),pwd->pw_name,myHostName,(int)IPMSG_ANSENTRY,USERNAME);
     int send_bytes;
     send_bytes = sendto(uni_fd,buffer,strlen(buffer),0,(struct sockaddr*)&target,sizeof(target));
     if(send_bytes == -1){
@@ -191,9 +191,10 @@ void uni_rece(){
             char ipmsg_v[20],ipmsg_flag[20],ipmsg_pack[20],username[20],hostname[25],addtion[20];
             sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%s",
                 ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
+            //username is in addtion
             if(IPMSG_ANSENTRY == (ipmsg_flag[0] - '0')){
                 if(!user_is_existed(inet_ntoa(fromwho.sin_addr))){
-                    user_entry(username,hostname,inet_ntoa(fromwho.sin_addr));
+                    user_entry(addtion,hostname,inet_ntoa(fromwho.sin_addr));
                 }
             }
         }

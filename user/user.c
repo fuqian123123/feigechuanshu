@@ -38,9 +38,20 @@ void user_exit(char* s_addr){
 //print all user
 void user_printall(void){
     IPMSG_USER* temp = ul_head_addr;
-    printf("\t%-25s%-25s%-25s\n","username","hostname","ip");
+    printf("\t%-20s%-20s%-20s\n","username","hostname","ip");
     while(temp != NULL){
-        printf("\t%-25s%-25s%-25s",temp->name,temp->host,temp->s_addr);
+        if(strlen(temp->name) > 15){
+            char username[20];
+            char ellipsis[3] = "...";
+            strncpy(username,temp->name,12);
+            username[12] = '\0';
+            strcat(username,ellipsis);
+            username[15] = '\0';
+            printf("\t%-20s%-20s%-20s",username,temp->host,temp->s_addr);
+        }
+        else{
+            printf("\t%-20s%-20s%-20s",temp->name,temp->host,temp->s_addr);
+        }
         temp = temp->next;
         printf("\n");
     }
