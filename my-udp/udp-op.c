@@ -120,13 +120,12 @@ void br_rece(void){
 }
 void uni_msg_send(char* s_addr,char* msg){
     int uni_fd = get_uni_sock_fd();
-    char test[20] = "192.168.43.103";
 
     struct sockaddr_in target;
     memset(&target,0,sizeof(target));
     target.sin_family = AF_INET;
     target.sin_port = htons(UNI_PORT);
-    target.sin_addr.s_addr = inet_addr(test);
+    target.sin_addr.s_addr = inet_addr(s_addr);
 
     int send_bytes;
     send_bytes = sendto(uni_fd,msg,strlen(msg),0,(struct sockaddr*)&target,sizeof(target));

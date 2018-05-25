@@ -83,7 +83,8 @@ void listen_input(void){
         //chat with sb.
         else if(!strncmp(buffer,command2,4)){
             char s_addr[20],temp[20];
-            sscanf("%s %s",temp,s_addr,buffer);
+            buffer[strlen(buffer)-1] = '\0';
+            sscanf(buffer,"%*s%s", s_addr);
             user_chat(s_addr);
         }
         else if(!strncmp(buffer,command4,strlen(buffer)-1)){
