@@ -1,20 +1,8 @@
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <netdb.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <sys/types.h>
-#include <pwd.h>
-#include <sys/utsname.h>
-#include <pthread.h>
 #include "util.h"
-#include "../user/user.h" 
-#include "../my-udp/udp-op.h"
-#include "../my-tcp/tcp-op.h"
 
 char USERNAME[USERNAME_SIZ] = "";
+char MYHOSTNAME[HOSTNAME_SIZ] = "";
+char REALNAME[REALNAME_SIZ] = "";
 static const char command1[] = "ls";
 static const char command2[] = "chat ";
 static const char command3[] = "file ";
@@ -39,6 +27,12 @@ void username_get(void){
         }
     }while(!flag);
     fflush(stdin);
+}
+void my_info_init(void){
+    gethostname(MYHOSTNAME,sizeof(MYHOSTNAME));
+    struct passwd* pwd;
+    pwd = getpwuid(getuid());
+    strcpy(REALNAME,pwd->pw_name);
 }
 void menu_print(void){
     fprintf(stdout,"\t****************************************\n");
@@ -82,8 +76,15 @@ void listen_input(void){
     while(1){
         printf("\t%-20s\n\t","Please input your command:");
         fgets(buffer,COM_SIZ,stdin);
+        //show userlist
         if(!strncmp(buffer,command1,strlen(buffer)-1)){
             user_printall();
+        }
+        //chat with sb.
+        else if(!strncmp(buffer,command2,4)){
+            char s_addr[20],temp[20];
+            sscanf("%s %s",temp,s_addr,buffer);
+            user_chat(s_addr);
         }
         else if(!strncmp(buffer,command4,strlen(buffer)-1)){
             main_exit();

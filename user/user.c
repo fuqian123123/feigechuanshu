@@ -1,6 +1,6 @@
-#include <string.h>
 #include "user.h"
 
+#define CHAT_SIZ 128
 static IPMSG_USER* ul_head_addr;
 
 //userlist init
@@ -17,6 +17,20 @@ void user_entry(char* name,char* host,char* s_addr){
     }
     else{
         user_init(name,host,s_addr);
+    }
+}
+//chat with sb.
+void user_chat(char* s_addr){
+    printf("\tNow chat with %s:\n",s_addr);
+    char buffer[CHAT_SIZ],send_msg[BUFSIZ];
+    while(1){
+        if(!strncmp(buffer,"quit",4)){
+            break;
+        }
+        fgets(buffer,CHAT_SIZ,stdin);
+        sprintf(send_msg,"%d:%ld:%s:%s:%d:%s",
+            (int)IPMSG_VERSION,(long int)time(NULL),REALNAME,MYHOSTNAME,(int)IPMSG_SENDMSG,buffer);
+        uni_msg_send(s_addr,send_msg);
     }
 }
 //if user existed
