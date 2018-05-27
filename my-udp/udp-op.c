@@ -167,14 +167,19 @@ void uni_rece(){
         receBytes = recvfrom(rece_fd,buffer,sizeof(buffer),0,
                 (struct sockaddr*)&fromwho,(socklen_t*)&addr_len);
         if(receBytes > 0){
-            char ipmsg_v[20],ipmsg_flag[20],ipmsg_pack[20],username[20],hostname[25],addtion[20];
+            //printf("Recv %s\n\t",buffer);
+            char ipmsg_v[20],ipmsg_flag[20],ipmsg_pack[20],username[20],hostname[25],addtion[CHAT_SIZ];
             sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%s",
-                ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
+               ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
             //username is in addtion
-            if(IPMSG_ANSENTRY == (ipmsg_flag[0] - '0')){
+            if(IPMSG_ANSENTRY == atoi(ipmsg_flag)){
                 if(!user_is_existed(inet_ntoa(fromwho.sin_addr))){
                     user_entry(addtion,hostname,inet_ntoa(fromwho.sin_addr));
                 }
+            }
+            //receive chat message from sb.
+            if(IPMSG_SENDMSG == atoi(ipmsg_flag)){
+                printf("\tReceive a message from %s:%s\n",inet_ntoa(fromwho.sin_addr),addtion);
             }
         }
     }

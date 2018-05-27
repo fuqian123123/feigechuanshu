@@ -25,6 +25,7 @@
 #define USERNAME_SIZ 20
 #define HOSTNAME_SIZ 256
 #define REALNAME_SIZ 50
+#define CHAT_SIZ 128
 
 void username_get(void);
 void my_info_init(void);
