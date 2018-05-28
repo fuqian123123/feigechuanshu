@@ -35,7 +35,7 @@ void user_chat(char* s_addr){
         }
     }
 }
-//if user existed
+//check user existed 
 int user_is_existed(char* s_addr){
     IPMSG_USER* temp = ul_head_addr;
     while(temp != NULL){
@@ -56,6 +56,7 @@ void user_printall(void){
     IPMSG_USER* temp = ul_head_addr;
     printf("\t%-20s%-20s%-20s\n","username","hostname","ip");
     while(temp != NULL){
+        //if username is too long,hide some chars
         if(strlen(temp->name) > 15){
             char username[20];
             char ellipsis[3] = "...";

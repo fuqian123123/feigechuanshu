@@ -76,18 +76,18 @@ void listen_input(void){
     while(1){
         printf("\t%-20s\n\t","Please input your command:");
         fgets(buffer,COM_SIZ,stdin);
+        buffer[strlen(buffer)-1] = '\0';
         //show userlist
-        if(!strncmp(buffer,command1,strlen(buffer)-1)){
+        if(!strcmp(buffer,command1)){
             user_printall();
         }
         //chat with sb.
         else if(!strncmp(buffer,command2,4)){
             char s_addr[20],temp[20];
-            buffer[strlen(buffer)-1] = '\0';
             sscanf(buffer,"%*s%s", s_addr);
             user_chat(s_addr);
         }
-        else if(!strncmp(buffer,command4,strlen(buffer)-1)){
+        else if(!strcmp(buffer,command4)){
             main_exit();
             exit(0);
         }
