@@ -1,4 +1,3 @@
-#include <string.h>
 #include "user.h"
 
 static IPMSG_USER* ul_head_addr;
@@ -19,7 +18,24 @@ void user_entry(char* name,char* host,char* s_addr){
         user_init(name,host,s_addr);
     }
 }
-//if user existed
+//chat with sb.
+void user_chat(char* s_addr){
+    printf("\tNow chat with %s:\n",s_addr);
+    char buffer[CHAT_SIZ],send_msg[BUFSIZ];
+    while(1){
+        fgets(buffer,CHAT_SIZ,stdin);
+        if(strncmp(buffer,"quit",4)){
+            sprintf(send_msg,"%d:%ld:%s:%s:%d:%s",
+            (int)IPMSG_VERSION,(long int)time(NULL),REALNAME,MYHOSTNAME,(int)IPMSG_SENDMSG,buffer);
+            uni_msg_send(s_addr,send_msg);
+        }
+        else{
+            fflush(stdin);
+            break;
+        }
+    }
+}
+//check user existed 
 int user_is_existed(char* s_addr){
     IPMSG_USER* temp = ul_head_addr;
     while(temp != NULL){
@@ -40,7 +56,19 @@ void user_printall(void){
     IPMSG_USER* temp = ul_head_addr;
     printf("\t%-20s%-20s%-20s\n","username","hostname","ip");
     while(temp != NULL){
-        printf("\t%-20s%-20s%-20s",temp->name,temp->host,temp->s_addr);
+        //if username is too long,hide some chars
+        if(strlen(temp->name) > 15){
+            char username[20];
+            char ellipsis[3] = "...";
+            strncpy(username,temp->name,12);
+            username[12] = '\0';
+            strcat(username,ellipsis);
+            username[15] = '\0';
+            printf("\t%-20s%-20s%-20s",username,temp->host,temp->s_addr);
+        }
+        else{
+            printf("\t%-20s%-20s%-20s",temp->name,temp->host,temp->s_addr);
+        }
         temp = temp->next;
         printf("\n");
     }

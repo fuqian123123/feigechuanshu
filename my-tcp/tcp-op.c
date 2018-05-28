@@ -1,17 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <time.h>
-#include <string.h>
-#include <netinet/in.h>
-#include <stdbool.h>
-#include <arpa/inet.h>
-#include <pwd.h>
-#include <unistd.h>
-#include "../util/util.h"
-#include "../ipmsg.h"
-#include "../user/user.h"
+
 #include "tcp-op.h"
 
 static const int TCP_PORT = 17989;
