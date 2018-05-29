@@ -1,8 +1,6 @@
 #ifndef _DS_H_
 #define _DS_H_
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "../util/util.h"
 //用户信息结构体
 typedef struct userlist
@@ -24,10 +22,15 @@ typedef struct filelist
 	long ltime;//最后修改时间
 	char user[10];	//发送者用户名
 	struct filelist *next;
+	struct filelist *pre;
 }IPMSG_FILE;
 
 IPMSG_USER* userlist_ds_init(void);
 void userlist_ds_item_add(IPMSG_USER* cur,char* name,char* host,char* s_addr);
 IPMSG_USER* userlist_ds_item_delete(IPMSG_USER* uhead,char* s_addr);
 void userlist_ds_destory(IPMSG_USER* ul);
+IPMSG_FILE* filelist_ds_init(void);
+void filelist_ds_item_add(IPMSG_FILE* head,char* name,int num,long pkgnum,long size,long ltime,char* user);
+IPMSG_FILE* filelist_ds_item_delete(IPMSG_FILE* uhead,char* s_addr);
+void filelist_ds_destory(IPMSG_FILE* head);
 #endif

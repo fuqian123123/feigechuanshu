@@ -180,11 +180,16 @@ void uni_rece(){
             //receive chat message from sb.
             if(IPMSG_SENDMSG == GET_MODE(atoi(ipmsg_flag))){
                 printf("\tReceive a message from %s:%s\n",inet_ntoa(fromwho.sin_addr),addtion);
-                if(IPMSG_SENDCHECKOPT == GET_OPT(atoi(ipmsg_flag))){
+                //need check
+                if(IPMSG_SENDCHECKOPT == (GET_OPT(atoi(ipmsg_flag)) & IPMSG_SENDCHECKOPT)){
                     char tempbuffer[BUFSIZ];
                     sprintf(tempbuffer,"%u:%ld:%s:%s:%u:%s",(u32)IPMSG_VERSION,
                         (long int)time(NULL),REALNAME,MYHOSTNAME,(u32)IPMSG_RECVMSG,ipmsg_pack);
                     uni_msg_send(inet_ntoa(fromwho.sin_addr),tempbuffer);
+                    //need transfer file
+                    if(IPMSG_FILEATTACHOPT == (GET_OPT(atoi(ipmsg_flag)) & IPMSG_FILEATTACHOPT)){
+                        
+                    }
                 }
             }
         }
