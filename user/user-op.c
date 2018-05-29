@@ -21,19 +21,18 @@ void user_entry(char* name,char* host,char* s_addr){
 //chat with sb.
 void user_chat(char* s_addr){
     printf("\tNow chat with %s:\n",s_addr);
+    char buffer[INPUT_SIZ],send_msg[BUFSIZ];
     while(1){
-        char buffer[INPUT_SIZ],send_msg[BUFSIZ];
         fgets(buffer,INPUT_SIZ,stdin);
-        buffer[strlen(buffer)-1] = '\0';
-        if(strcmp(buffer,"quit")){
-            sprintf(send_msg,"%u:%ld:%s:%s:%u:%s",
+        if(strncmp(buffer,"quit",4)){
+            sprintf(send_msg,"%u:%ld:%s:%s:%x:%s",
             (u32)IPMSG_VERSION,(long int)time(NULL),REALNAME,MYHOSTNAME,(u32)IPMSG_SENDMSG,buffer);
             uni_msg_send(s_addr,send_msg);
         }
         else{
+            fflush(stdin);
             break;
         }
-        fflush(stdin);
     }
 }
 //check user existed 
