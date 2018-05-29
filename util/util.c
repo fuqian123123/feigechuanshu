@@ -4,9 +4,10 @@ char USERNAME[USERNAME_SIZ] = "";
 char MYHOSTNAME[HOSTNAME_SIZ] = "";
 char REALNAME[REALNAME_SIZ] = "";
 static const char command1[] = "ls";
-static const char command2[] = "chat ";
-static const char command3[] = "file ";
-static const char command4[] = "exit";
+static const char command2[] = "sendto";
+static const char command3[] = "sendfile";
+static const char command4[] = "getfile";
+static const char command5[] = "exit";
 
 void username_get(void){
     int u_len,flag;
@@ -37,9 +38,10 @@ void my_info_init(void){
 void menu_print(void){
     fprintf(stdout,"\t****************************************\n");
     printf("\t\t%-20s\n","1.ls");
-    printf("\t\t%-20s\n","2.chat with sb.");
-    printf("\t\t%-20s\n","3.transfer file to sb.");
-    printf("\t\t%-20s\n","4.exit");
+    printf("\t\t%-20s\n","2.sendto x.x.x.x");
+    printf("\t\t%-20s\n","3.sendfile x.x.x.x");
+    printf("\t\t%-20s\n","4.getfile filename x.x.x.x");
+    printf("\t\t%-20s\n","5.exit");
     fprintf(stdout,"\t****************************************\n");
 }
 void main_init(void){
@@ -82,12 +84,18 @@ void listen_input(void){
             user_printall();
         }
         //chat with sb.
-        else if(!strncmp(buffer,command2,4)){
+        else if(!strncmp(buffer,command2,strlen(command2))){
             char s_addr[20],temp[20];
             sscanf(buffer,"%*s%s", s_addr);
             user_chat(s_addr);
         }
-        else if(!strcmp(buffer,command4)){
+        else if(!strncmp(buffer,command3,strlen(command3))){
+
+        }
+        else if(!strncmp(buffer,command4,strlen(command4))){
+
+        }
+        else if(!strcmp(buffer,command5)){
             main_exit();
             exit(0);
         }
