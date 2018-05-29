@@ -24,6 +24,7 @@ void user_chat(char* s_addr){
     char buffer[INPUT_SIZ],send_msg[BUFSIZ];
     while(1){
         fgets(buffer,INPUT_SIZ,stdin);
+        buffer[strlen(buffer)-1] = '\0';
         if(strcmp(buffer,"quit")){
             sprintf(send_msg,"%u:%ld:%s:%s:%u:%s",
             (u32)IPMSG_VERSION,(long int)time(NULL),REALNAME,MYHOSTNAME,(u32)IPMSG_SENDMSG,buffer);
