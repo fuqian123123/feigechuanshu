@@ -31,9 +31,9 @@ void user_chat(char* s_addr){
             uni_msg_send(s_addr,send_msg);
         }
         else{
-            fflush(stdin);
             break;
         }
+        fflush(stdin);
     }
 }
 //check user existed 

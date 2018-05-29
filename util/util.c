@@ -73,12 +73,13 @@ void main_exit(void){
     user_clear();
 }
 void listen_input(void){
-    char buffer[COM_SIZ];
     setbuf(stdin,NULL);
     while(1){
         printf("\t%-20s\n\t","Please input your command:");
+        char buffer[COM_SIZ];
         fgets(buffer,COM_SIZ,stdin);
         buffer[strlen(buffer)-1] = '\0';
+        fflush(stdin);
         //show userlist
         if(!strcmp(buffer,command1)){
             user_printall();
