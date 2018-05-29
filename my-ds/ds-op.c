@@ -88,11 +88,12 @@ void filelist_ds_item_add(IPMSG_FILE* head,char* name,int num,long pkgnum,long s
             perror("filelist_ds_item_add error");
         }
         strcpy(next->name,name);
+        strcpy(next->user,user);
         next->num = num;
         next->pkgnum = pkgnum;
         next->size = size;
         next->ltime = ltime;
-        strcpy(next->user,user);
+
         next->pre = temp;
         temp->next = next;
     }

@@ -28,6 +28,9 @@
 #define REALNAME_SIZ 50
 #define CHAT_SIZ 128
 
+#define FILELIST_SEND_TYPE 0
+#define FILELIST_RECE_TYPE 1
+
 void username_get(void);
 void my_info_init(void);
 void menu_print(void);
