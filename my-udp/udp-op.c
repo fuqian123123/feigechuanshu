@@ -2,8 +2,8 @@
 
 #define BR_ENTRY_FLAG 0
 #define BR_EXIT_FLAG 1
-static const char BR_ADDR[] = "10.22.255.255";
-//static const char BR_ADDR[] = "192.168.43.255";
+//static const char BR_ADDR[] = "10.22.255.255";
+static const char BR_ADDR[] = "192.168.43.255";
 static const int BR_PORT = 4001;
 static const int BR_RECV_PORT = 4001;
 static const int UNI_PORT = 4003;
@@ -180,6 +180,12 @@ void uni_rece(){
             //receive chat message from sb.
             if(IPMSG_SENDMSG == GET_MODE(atoi(ipmsg_flag))){
                 printf("\tReceive a message from %s:%s\n",inet_ntoa(fromwho.sin_addr),addtion);
+                if(IPMSG_SENDCHECKOPT == GET_OPT(atoi(ipmsg_flag))){
+                    char tempbuffer[BUFSIZ];
+                    sprintf(tempbuffer,"%u:%ld:%s:%s:%u:%s",(u32)IPMSG_VERSION,
+                        (long int)time(NULL),REALNAME,MYHOSTNAME,(u32)IPMSG_RECVMSG,ipmsg_pack);
+                    uni_msg_send(inet_ntoa(fromwho.sin_addr),tempbuffer);
+                }
             }
         }
     }
