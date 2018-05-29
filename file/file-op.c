@@ -87,7 +87,8 @@ void file_transfer_send_file(char* s_addr){
             sprintf(msg_main,"%x:%ld:%s:%s:%x:",
                 (u32)IPMSG_VERSION,pkgnum,REALNAME,MYHOSTNAME,
                 (u32)(IPMSG_SENDMSG|IPMSG_SENDCHECKOPT|IPMSG_FILEATTACHOPT));
-            sprintf(buffer,"%s%d:%s:%x:%x::",msg_main,file_order_num,filename,(u32)buf.st_size,(u32)buf.st_mtime);
+            sprintf(buffer,"%s%d:%s:%x:%x::",
+                msg_main,file_order_num,filename,(u32)buf.st_size,(u32)buf.st_mtime);
             uni_msg_send(s_addr,buffer);
             printf("%x\n",(u32)(IPMSG_SENDMSG|IPMSG_SENDCHECKOPT|IPMSG_FILEATTACHOPT));
             file_transfer_add(FILELIST_SEND_TYPE,filename,file_order_num,pkgnum,

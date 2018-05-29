@@ -188,7 +188,7 @@ void uni_rece(){
                     uni_msg_send(inet_ntoa(fromwho.sin_addr),tempbuffer);
                     //need transfer file
                     if(IPMSG_FILEATTACHOPT == (GET_OPT(atoi(ipmsg_flag)) & IPMSG_FILEATTACHOPT)){
-                        
+                        //file_transfer_add(FILELIST_RECE_TYPE,);
                     }
                 }
             }
