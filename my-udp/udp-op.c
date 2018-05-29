@@ -2,8 +2,8 @@
 
 #define BR_ENTRY_FLAG 0
 #define BR_EXIT_FLAG 1
-//static const char BR_ADDR[] = "10.22.255.255";
-static const char BR_ADDR[] = "192.168.43.255";
+static const char BR_ADDR[] = "10.22.255.255";
+//static const char BR_ADDR[] = "192.168.43.255";
 static const int BR_PORT = 4001;
 static const int BR_RECV_PORT = 4001;
 static const int UNI_PORT = 4003;
@@ -32,7 +32,7 @@ int get_uni_sock_fd(void){
 }
 void br_send(int flag){
     int br_fd = get_br_sock_fd();
-    char buffer[BUFSIZ];
+    char buffer[BUFFER_SIZ];
     struct sockaddr_in theirAddr;
     memset(&theirAddr,0,sizeof(struct sockaddr_in));
     theirAddr.sin_family = AF_INET;
@@ -70,7 +70,7 @@ void br_exit_send(void){
 }
 //receive user send message
 void br_rece(void){
-    char buffer[BUFSIZ];
+    char buffer[BUFFER_SIZ];
     int rece_fd = get_br_sock_fd();
     struct sockaddr_in server;
     memset(&server,0,sizeof(struct sockaddr_in));
@@ -135,14 +135,14 @@ void uni_msg_send(char* s_addr,char* msg){
     close(uni_fd);
 }
 void uni_answer_entry_send(char* s_addr){
-    char buffer[BUFSIZ];
+    char buffer[BUFFER_SIZ];
 
     sprintf(buffer,"%x:%ld:%s:%s:%x:%s",
         (u32)IPMSG_VERSION,(long int)time(NULL),REALNAME,MYHOSTNAME,(u32)IPMSG_ANSENTRY,USERNAME);
     uni_msg_send(s_addr,buffer);
 }
 void uni_rece(){
-    char buffer[BUFSIZ];
+    char buffer[BUFFER_SIZ];
     int rece_fd = get_uni_sock_fd();
     struct sockaddr_in server;
     memset(&server,0,sizeof(struct sockaddr_in));
@@ -168,7 +168,7 @@ void uni_rece(){
                 (struct sockaddr*)&fromwho,(socklen_t*)&addr_len);
         if(receBytes > 0){
             //printf("Recv %s\n\t",buffer);
-            char ipmsg_v[20],ipmsg_flag[20],ipmsg_pack[20],username[20],hostname[25],addtion[BUFSIZ];
+            char ipmsg_v[20],ipmsg_flag[20],ipmsg_pack[20],username[20],hostname[25],addtion[BUFFER_SIZ];
             sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%[a-z| |A-Z|0-9]",
                ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
             //username is in addtion
@@ -182,7 +182,7 @@ void uni_rece(){
                 printf("\tReceive a message from %s:%s\n",inet_ntoa(fromwho.sin_addr),addtion);
                 //need check
                 if(IPMSG_SENDCHECKOPT == (GET_OPT(atoi(ipmsg_flag)) & IPMSG_SENDCHECKOPT)){
-                    char tempbuffer[BUFSIZ];
+                    char tempbuffer[BUFFER_SIZ];
                     sprintf(tempbuffer,"%x:%ld:%s:%s:%x:%s",(u32)IPMSG_VERSION,
                         (long int)time(NULL),REALNAME,MYHOSTNAME,(u32)IPMSG_RECVMSG,ipmsg_pack);
                     uni_msg_send(inet_ntoa(fromwho.sin_addr),tempbuffer);

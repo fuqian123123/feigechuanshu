@@ -78,9 +78,9 @@ void listen_input(void){
     while(1){
         printf("\t%-20s\n\t","Please input your command:");
         fgets(buffer,COM_SIZ,stdin);
-        //buffer[strlen(buffer)-1] = '\0';
+        buffer[strlen(buffer)-1] = '\0';
         //show userlist
-        if(!strncmp(buffer,command1,strlen(command1))){
+        if(!strcmp(buffer,command1)){
             user_printall();
         }
         //chat with sb.
@@ -98,7 +98,7 @@ void listen_input(void){
         else if(!strncmp(buffer,command4,strlen(command4))){
 
         }
-        else if(!strncmp(buffer,command5,strlen(command5))){
+        else if(!strcmp(buffer,command5)){
             main_exit();
             exit(0);
         }

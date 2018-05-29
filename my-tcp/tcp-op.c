@@ -6,7 +6,7 @@ static const int MAX_LEN = 80;
 
 void tcp_msg_send(char* s_addr){
     int client_sock;
-    char buffer[BUFSIZ] = "tcp_msg_send:tcp test";
+    char buffer[BUFFER_SIZ] = "tcp_msg_send:tcp test";
     
     client_sock = socket(PF_INET,SOCK_STREAM,IPPROTO_TCP);
     if(client_sock == -1){
@@ -31,7 +31,7 @@ void tcp_msg_send(char* s_addr){
 }
 void tcp_msg_rece(){
     int server_sock;
-    char buffer[BUFSIZ];
+    char buffer[BUFFER_SIZ];
 
     server_sock = socket(PF_INET,SOCK_STREAM,IPPROTO_TCP);
     if(server_sock == -1){
