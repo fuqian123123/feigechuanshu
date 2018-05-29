@@ -12,6 +12,7 @@
 #include <arpa/inet.h>
 #include <sys/types.h>
 #include <pwd.h>
+#include <sys/stat.h>
 #include <unistd.h>
 #include <netdb.h>
 #include <sys/utsname.h>
@@ -27,7 +28,7 @@
 #define USERNAME_SIZ 20
 #define HOSTNAME_SIZ 256
 #define REALNAME_SIZ 50
-#define CHAT_SIZ 128
+#define INPUT_SIZ 128
 
 #define FILELIST_SEND_TYPE 0
 #define FILELIST_RECE_TYPE 1

@@ -69,3 +69,34 @@ void file_transfer_printall(int type){
         printf("\n");
     }
 }
+
+void file_transfer_send_file(char* s_addr){
+    printf("\tNow input the files' absolute path you wanna transfer:\n");
+    char filename[INPUT_SIZ],msg_main[BUFSIZ],buffer[BUFSIZ];
+    int file_order_num = 0;
+    long pkgnum;
+
+    while(1){
+        fgets(filename,INPUT_SIZ,stdin);
+        filename[strlen(filename)-1] = '\0';
+
+        if(strcmp(filename,"quit")){
+            struct stat buf;
+            stat(filename,&buf);
+            pkgnum = (long)time(NULL);
+            sprintf(msg_main,"%x:%ld:%s:%s:%x:",
+                (u32)IPMSG_VERSION,pkgnum,REALNAME,MYHOSTNAME,
+                (u32)(IPMSG_SENDMSG|IPMSG_SENDCHECKOPT|IPMSG_FILEATTACHOPT));
+            sprintf(buffer,"%s%d:%s:%x:%x::",msg_main,file_order_num,filename,(u32)buf.st_size,(u32)buf.st_mtime);
+            uni_msg_send(s_addr,buffer);
+            printf("%x\n",(u32)(IPMSG_SENDMSG|IPMSG_SENDCHECKOPT|IPMSG_FILEATTACHOPT));
+            file_transfer_add(FILELIST_SEND_TYPE,filename,file_order_num,pkgnum,
+                                (long)buf.st_size,(long)buf.st_mtime,USERNAME);
+            file_order_num++;
+        }
+        else{
+            fflush(stdin);
+            break;
+        }
+    }
+}

@@ -85,12 +85,15 @@ void listen_input(void){
         }
         //chat with sb.
         else if(!strncmp(buffer,command2,strlen(command2))){
-            char s_addr[20],temp[20];
+            char s_addr[20];
             sscanf(buffer,"%*s%s", s_addr);
             user_chat(s_addr);
         }
+        //sendfile to sb.
         else if(!strncmp(buffer,command3,strlen(command3))){
-
+            char s_addr[20];
+            sscanf(buffer,"%*s%s", s_addr);
+            file_transfer_send_file(s_addr);
         }
         else if(!strncmp(buffer,command4,strlen(command4))){
 

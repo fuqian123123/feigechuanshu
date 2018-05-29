@@ -15,12 +15,12 @@ typedef struct userlist
 //文件信息结构体
 typedef struct filelist
 {
-	char name[50];//文件名
+	char name[128];//文件名
 	int num;// 文件序号
 	long pkgnum;//包编号
 	long size;//文件大小
 	long ltime;//最后修改时间
-	char user[10];	//发送者用户名
+	char user[20];	//发送者用户名
 	struct filelist *next;
 	struct filelist *pre;
 }IPMSG_FILE;
