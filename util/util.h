@@ -20,7 +20,8 @@
 #include "../my-ds/ds-op.h"
 #include "../my-tcp/tcp-op.h"
 #include "../my-udp/udp-op.h"
-#include "../user/user.h"
+#include "../user/user-op.h"
+#include "../file/file-op.h"
 
 #define COM_SIZ 80
 #define USERNAME_SIZ 20
