@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <netdb.h>
 #include <sys/utsname.h>
+#include "../def.h"
 #include "../ipmsg.h"
 #include "../my-ds/ds-op.h"
 #include "../my-tcp/tcp-op.h"
