@@ -21,8 +21,8 @@ void user_entry(char* name,char* host,char* s_addr){
 //chat with sb.
 void user_chat(char* s_addr){
     printf("\tNow chat with %s:\n",s_addr);
-    char buffer[INPUT_SIZ],send_msg[BUFSIZ];
     while(1){
+        char buffer[INPUT_SIZ],send_msg[BUFSIZ];
         fgets(buffer,INPUT_SIZ,stdin);
         buffer[strlen(buffer)-1] = '\0';
         if(strcmp(buffer,"quit")){
