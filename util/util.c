@@ -50,12 +50,12 @@ void menu_print(void){
 void help_print(void){
     fprintf(stdout,"\t****************************************\n");
     printf("usage: \n");
-    printf("\tls -u\tshow user list\n");
-    printf("\tls -f\tshow file list\n");
-    printf("\tsendto x.x.x.x\tentry 'quit' to get back to main menu\n");
-    printf("\tsendfile x.x.x.x\tentry 'quit' to get back to main menu\n");
-    printf("\tgetfile [filename] x.x.x.x\tfilename must be absolute file path\n");
-    printf("\texit\texit program\n");
+    printf("\tls -u\t\t\t\t\t%-50s\n","show user list");
+    printf("\tls -f\t\t\t\t\t%-50s\n","show file list");
+    printf("\tsendto x.x.x.x\t\t\t\t%-50s\n","entry 'quit' to get back to main menu");
+    printf("\tsendfile x.x.x.x\t\t\t%-50s\n","entry 'quit' to get back to main menu");
+    printf("\tgetfile [filename] x.x.x.x\t\t%-50s\n","filename must be absolute file path");
+    printf("\texit\t\t\t\t\t%-50s\n","exit program");
     fprintf(stdout,"\t****************************************\n");
 }
 void main_init(void){

@@ -140,7 +140,7 @@ void file_transfer_ready(int type,char* s_addr,char* filename){
             break;
     }
     if(!temp){
-        printf("\tNo such file,please check your filename.");
+        printf("\tNo such file,please check your filename.\n");
     }
     else{
         long num,pkgnum,size; 
