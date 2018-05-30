@@ -34,4 +34,5 @@ void filelist_ds_item_add(IPMSG_FILE* head,char* name,int num,long pkgnum,long s
 IPMSG_FILE* filelist_ds_item_delete(IPMSG_FILE* uhead,char* s_addr);
 void filelist_ds_destory(IPMSG_FILE* head);
 IPMSG_FILE* filelist_ds_item_get(IPMSG_FILE* uhead,char* filename);
+IPMSG_FILE* filelist_search(IPMSG_FILE* head,long num,long pkgnum);
 #endif

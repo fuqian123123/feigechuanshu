@@ -46,7 +46,7 @@ void menu_print(void){
 }
 void main_init(void){
     int ret;
-    pthread_t id1,id2,id3;
+    pthread_t id1,id2,id3,id4;
     ret = pthread_create(&id1,NULL,(void*)br_rece,NULL);
     if(ret){
         perror("id1 created failed!");
@@ -57,16 +57,23 @@ void main_init(void){
         perror("id2 created failed!");
     }
     pthread_detach(id2);
+    
+    ret = pthread_create(&id4,NULL,(void*)tcp_rece,NULL);
+    if(ret){
+        perror("id4 created failed!");
+    }
+    pthread_detach(id4);
     sleep(1);
-    br_entry_send();
 
+    br_entry_send();
     menu_print();
 
     ret = pthread_create(&id3,NULL,(void*)listen_input,NULL);
     if(ret){
-        perror("id1 created failed!");
+        perror("id3 created failed!");
     }
     pthread_detach(id3);
+    
 }
 void main_exit(void){
     br_exit_send();
@@ -101,8 +108,6 @@ void listen_input(void){
         else if(!strncmp(buffer,command4,strlen(command4))){
             char s_addr[20],filename[128];
             sscanf(buffer,"%*s%s%s",filename,s_addr);
-            //puts(filename);
-            //puts(s_addr);
             file_transfer_ready(FILELIST_RECE_TYPE,s_addr,filename);
         }
         else if(!strcmp(buffer,command5)){

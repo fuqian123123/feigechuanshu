@@ -125,9 +125,9 @@ void file_transfer_clear(int type){
             break;
     }
 }
-
+//rece terminal wanna transfer file
 void file_transfer_ready(int type,char* s_addr,char* filename){
-    char buffer[BUFFER_SIZ],addtion[BUFFER_SIZ];
+    char buffer[BUFFER_SIZ];
     IPMSG_FILE* temp = NULL;
     switch(type)
     {
@@ -146,10 +146,29 @@ void file_transfer_ready(int type,char* s_addr,char* filename){
         num = temp->num;
         pkgnum = temp->pkgnum;
         size = temp->size;
-        sprintf(addtion,"%x:%x:%x",(u32)pkgnum,(u32)num,(u32)size);
-        sprintf(buffer,"%x:%ld:%s:%s:%x:%s",
-                (u32)IPMSG_VERSION,(long int)time(NULL),REALNAME,MYHOSTNAME,(u32)IPMSG_GETFILEDATA,addtion);
+        sprintf(buffer,"%x:%ld:%s:%s:%x:%x:%x:%x",
+                (u32)IPMSG_VERSION,(long int)time(NULL),REALNAME,MYHOSTNAME,
+                (u32)IPMSG_GETFILEDATA,(u32)pkgnum,(u32)num,(u32)size);
         uni_msg_send(s_addr,buffer);
         //puts(buffer);
     }
+}
+//send terminal begin to transfer file
+void file_transfer_launch(int type,long num,long pkgnum,char* s_addr){
+    IPMSG_FILE* temp = NULL;
+    printf("%ld\t%ld\t\n",num,pkgnum);
+    switch(type){
+        case FILELIST_SEND_TYPE:
+            temp = filelist_search(fl_send_head_addr,num,pkgnum);
+            break;
+        case FILELIST_RECE_TYPE:
+            temp = filelist_search(fl_rece_head_addr,num,pkgnum);
+            break;
+        default:
+            break;
+    }
+    if(temp != NULL)
+        tcp_send(s_addr,temp->name);
+    else
+        perror("\tfile_transfer_launch: filelist_search null");
 }

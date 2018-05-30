@@ -3,6 +3,6 @@
 
 #include "../util/util.h"
 
-void tcp_msg_send(char* s_addr);
-void tcp_msg_rece();
+void tcp_send(char* s_addr,char* filename);
+void tcp_rece();
 #endif

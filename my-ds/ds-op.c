@@ -152,3 +152,14 @@ void filelist_ds_destory(IPMSG_FILE* head){
         head = NULL;
     }
 }
+
+IPMSG_FILE* filelist_search(IPMSG_FILE* uhead,long num,long pkgnum){
+    IPMSG_FILE* temp = uhead;
+    while(temp != NULL){
+        if(temp->num == num && temp->pkgnum == pkgnum){
+            return temp;
+        }
+        temp = temp->next;            
+    }
+    return NULL;
+}

@@ -182,12 +182,13 @@ void uni_rece(){
             }
             //tcp transfer file ready
             if(IPMSG_GETFILEDATA == GET_MODE(strtol(ipmsg_flag,NULL,16))){
-                //puts(buffer);
+                puts(buffer);
                 char num[10],pkgnum[30],size[10];
                 sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%[^:]",
                     ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,pkgnum,num,size);
-                //printf("%s\t%s\t%s\t\n",num,pkgnum,size);
-                
+                //printf("%ld\t%ld\t%s\t%s\t\n",atol(num),atol(pkgnum),num,pkgnum);
+                file_transfer_launch(FILELIST_SEND_TYPE,strtol(num,NULL,16),
+                                strtol(pkgnum,NULL,16),inet_ntoa(fromwho.sin_addr));
             }
             //receive chat message from sb.
             if(IPMSG_SENDMSG == GET_MODE(strtol(ipmsg_flag,NULL,16))){
