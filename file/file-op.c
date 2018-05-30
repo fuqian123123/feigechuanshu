@@ -83,17 +83,22 @@ void file_transfer_send_file(char* s_addr){
 
         if(strcmp(filename,"quit")){
             struct stat buf;
-            stat(filename,&buf);
-            pkgnum = (long)time(NULL);
-            sprintf(buffer,"%x:%ld:%s:%s:%x:\\0%d:%s:%x:%x::",
-                (u32)IPMSG_VERSION,pkgnum,REALNAME,MYHOSTNAME,
-                (u32)(IPMSG_SENDMSG|IPMSG_SENDCHECKOPT|IPMSG_FILEATTACHOPT),
-                file_order_num,filename,(u32)buf.st_size,(u32)buf.st_mtime);
-            uni_msg_send(s_addr,buffer);
-            //printf("%x\n",(u32)(IPMSG_SENDMSG|IPMSG_SENDCHECKOPT|IPMSG_FILEATTACHOPT));
-            file_transfer_add(FILELIST_SEND_TYPE,filename,file_order_num,pkgnum,
-                                (long)buf.st_size,(long)buf.st_mtime,USERNAME);
-            file_order_num++;
+            int status;
+            status = stat(filename,&buf);
+            if(!status){
+                pkgnum = (long)time(NULL);
+                sprintf(buffer,"%x:%ld:%s:%s:%x:\\0%d:%s:%x:%x::",
+                    (u32)IPMSG_VERSION,pkgnum,REALNAME,MYHOSTNAME,
+                    (u32)(IPMSG_SENDMSG|IPMSG_SENDCHECKOPT|IPMSG_FILEATTACHOPT),
+                    file_order_num,filename,(u32)buf.st_size,(u32)buf.st_mtime);
+                uni_msg_send(s_addr,buffer);
+                file_transfer_add(FILELIST_SEND_TYPE,filename,file_order_num,pkgnum,
+                                    (long)buf.st_size,(long)buf.st_mtime,USERNAME);
+                file_order_num++;
+            }
+            else{
+                printf("Please check your file name and try again.\n");
+            }
         }
         else{
             fflush(stdin);
