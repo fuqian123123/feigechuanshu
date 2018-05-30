@@ -200,8 +200,20 @@ void uni_rece(){
                         //need transfer file
                         if(IPMSG_FILEATTACHOPT == (GET_OPT(strtol(ipmsg_flag,NULL,16))&IPMSG_FILEATTACHOPT)){
                             puts(buffer);
-                            puts(strstr(buffer,"\\0"));
-                            //file_transfer_add(FILELIST_RECE_TYPE,);
+                            char* temp = strstr(buffer,"\\0");
+                            char temp_name[128],temp_num[10];
+                            char temp_size[10],temp_ltime[15];
+                            sscanf(temp,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]",
+                                temp_num,temp_name,temp_size,temp_ltime,ipmsg_flag);
+                            char* real_num = (char*)malloc(sizeof(char)*(strlen(temp_num)-2));
+                            printf("%s\n",temp_num);
+                            for(int i = 0; i < (strlen(temp_num)-2);i++){
+                                real_num[i] = temp_num[2+i];
+                            }
+                            file_transfer_add(FILELIST_RECE_TYPE,temp_name,atoi(real_num),atoi(ipmsg_pack),
+                                                atoi(temp_size),atoi(temp_ltime),username);
+                            free(real_num);
+                            real_num = NULL;
                         }
                     }
                 }
