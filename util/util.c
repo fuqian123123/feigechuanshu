@@ -8,6 +8,8 @@ static const char command2[] = "sendto";
 static const char command3[] = "sendfile";
 static const char command4[] = "getfile";
 static const char command5[] = "exit";
+static const char command6[] = "help";
+
 
 void username_get(void){
     int u_len,flag;
@@ -37,11 +39,23 @@ void my_info_init(void){
 }
 void menu_print(void){
     fprintf(stdout,"\t****************************************\n");
-    printf("\t\t%-20s\n","1.ls");
+    printf("\t\t%-20s\n","1.chat");
     printf("\t\t%-20s\n","2.sendto x.x.x.x");
     printf("\t\t%-20s\n","3.sendfile x.x.x.x");
     printf("\t\t%-20s\n","4.getfile filename x.x.x.x");
     printf("\t\t%-20s\n","5.exit");
+    printf("\t\t%-20s\n","6.help");
+    fprintf(stdout,"\t****************************************\n");
+}
+void help_print(void){
+    fprintf(stdout,"\t****************************************\n");
+    printf("usage: \n");
+    printf("\tls -u\tshow user list\n");
+    printf("\tls -f\tshow file list\n");
+    printf("\tsendto x.x.x.x\tentry 'quit' to get back to main menu\n");
+    printf("\tsendfile x.x.x.x\tentry 'quit' to get back to main menu\n");
+    printf("\tgetfile [filename] x.x.x.x\tfilename must be absolute file path\n");
+    printf("\texit\texit program\n");
     fprintf(stdout,"\t****************************************\n");
 }
 void main_init(void){
@@ -120,6 +134,9 @@ void listen_input(void){
         else if(!strcmp(buffer,command5)){
             main_exit();
             exit(0);
+        }
+        else if(!strcmp(buffer,command6)){
+            help_print();
         }
     }
 }

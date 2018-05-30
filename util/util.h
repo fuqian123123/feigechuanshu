@@ -40,6 +40,7 @@ void menu_print(void);
 void listen_input(void);
 void main_init(void);
 void main_exit(void);
+void help_print(void);
 extern char USERNAME[USERNAME_SIZ];
 extern char MYHOSTNAME[HOSTNAME_SIZ];
 extern char REALNAME[REALNAME_SIZ];
