@@ -78,7 +78,8 @@ void listen_input(void){
     while(1){
         printf("\t%-20s\n\t","Please input your command:");
         fgets(buffer,COM_SIZ,stdin);
-        buffer[strlen(buffer)-1] = '\0';
+        if(buffer[strlen(buffer)-1] == '\n')
+            buffer[strlen(buffer)-1] = '\0';
         //show userlist
         if(!strcmp(buffer,command1)){
             user_printall();

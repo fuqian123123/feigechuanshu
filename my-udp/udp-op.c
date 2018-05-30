@@ -2,8 +2,8 @@
 
 #define BR_ENTRY_FLAG 0
 #define BR_EXIT_FLAG 1
-//static const char BR_ADDR[] = "10.22.255.255";
-static const char BR_ADDR[] = "192.168.43.255";
+static const char BR_ADDR[] = "10.21.255.255";
+//static const char BR_ADDR[] = "192.168.43.255";
 static const int BR_PORT = 4001;
 static const int BR_RECV_PORT = 4001;
 static const int UNI_PORT = 4003;
@@ -166,6 +166,7 @@ void uni_rece(){
     while(1){
         receBytes = recvfrom(rece_fd,buffer,sizeof(buffer),0,
                 (struct sockaddr*)&fromwho,(socklen_t*)&addr_len);
+        buffer[receBytes] = '\0';
         if(receBytes > 0){
             //printf("Recv %s\n\t",buffer);
             char ipmsg_v[20],ipmsg_flag[20],ipmsg_pack[20],username[20],hostname[25],addtion[BUFFER_SIZ];
@@ -193,6 +194,7 @@ void uni_rece(){
                 }
             }
         }
+        receBytes = 0;
     }
     close(rece_fd);
 }

@@ -78,7 +78,8 @@ void file_transfer_send_file(char* s_addr){
 
     while(1){
         fgets(filename,INPUT_SIZ,stdin);
-        filename[strlen(filename)-1] = '\0';
+        if(filename[strlen(filename)-1] == '\n')
+            filename[strlen(filename)-1] = '\0';
 
         if(strcmp(filename,"quit")){
             struct stat buf;
