@@ -169,8 +169,6 @@ void uni_rece(){
         buffer[receBytes] = '\0';
         if(receBytes > 0){
             char ipmsg_v[20],ipmsg_flag[20],ipmsg_pack[20],username[20],hostname[25],addtion[BUFFER_SIZ];
-            //sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%[a-z| |A-Z|0-9]",
-            //   ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
             sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]",
                ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag);
             //printf("%s\n",ipmsg_flag);
@@ -201,8 +199,9 @@ void uni_rece(){
                     if(IPMSG_SENDCHECKOPT == (GET_OPT(strtol(ipmsg_flag,NULL,16))&IPMSG_SENDCHECKOPT)){
                         //need transfer file
                         if(IPMSG_FILEATTACHOPT == (GET_OPT(strtol(ipmsg_flag,NULL,16))&IPMSG_FILEATTACHOPT)){
+                            puts(buffer);
+                            puts(strstr(buffer,"\\0"));
                             //file_transfer_add(FILELIST_RECE_TYPE,);
-                            puts("hehe");
                         }
                     }
                 }
