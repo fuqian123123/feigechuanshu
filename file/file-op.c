@@ -101,3 +101,18 @@ void file_transfer_send_file(char* s_addr){
         }
     }
 }
+
+void file_transfer_clear(int type){
+    
+    switch (type)
+    {
+        case FILELIST_SEND_TYPE:
+            filelist_ds_destory(fl_send_head_addr);
+            break;
+        case FILELIST_RECE_TYPE:
+            filelist_ds_destory(fl_rece_head_addr);
+            break;
+        default:
+            break;
+    }
+}

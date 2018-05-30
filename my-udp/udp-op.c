@@ -2,8 +2,8 @@
 
 #define BR_ENTRY_FLAG 0
 #define BR_EXIT_FLAG 1
-static const char BR_ADDR[] = "10.21.255.255";
-//static const char BR_ADDR[] = "192.168.43.255";
+//static const char BR_ADDR[] = "10.22.255.255";
+static const char BR_ADDR[] = "192.168.43.255";
 static const int BR_PORT = 4001;
 static const int BR_RECV_PORT = 4001;
 static const int UNI_PORT = 4003;
@@ -206,12 +206,14 @@ void uni_rece(){
                             sscanf(temp,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]",
                                 temp_num,temp_name,temp_size,temp_ltime,ipmsg_flag);
                             char* real_num = (char*)malloc(sizeof(char)*(strlen(temp_num)-2));
-                            printf("%s\n",temp_num);
+                            printf("%s\n",temp_ltime);
                             for(int i = 0; i < (strlen(temp_num)-2);i++){
                                 real_num[i] = temp_num[2+i];
                             }
                             file_transfer_add(FILELIST_RECE_TYPE,temp_name,atoi(real_num),atoi(ipmsg_pack),
-                                                atoi(temp_size),atoi(temp_ltime),username);
+                                                atoi(temp_size),strtol(temp_ltime,NULL,16),username);
+                            file_transfer_printall(FILELIST_RECE_TYPE);
+                            file_transfer_clear(FILELIST_RECE_TYPE);
                             free(real_num);
                             real_num = NULL;
                         }
