@@ -77,7 +77,7 @@ IPMSG_FILE* filelist_ds_init(void){
     }
     return head;
 }
-void filelist_ds_item_add(IPMSG_FILE* head,char* name,int num,long pkgnum,long size,long ltime,char* user){
+void filelist_ds_item_add(IPMSG_FILE* head,char* name,int num,long pkgnum,long size,long ltime,char* user,char* s_addr){
     if(head != NULL){
         IPMSG_FILE* temp = head;
         while(temp->next != NULL){
@@ -89,6 +89,7 @@ void filelist_ds_item_add(IPMSG_FILE* head,char* name,int num,long pkgnum,long s
         }
         strcpy(next->name,name);
         strcpy(next->user,user);
+        strcpy(next->s_addr,s_addr);
         next->num = num;
         next->pkgnum = pkgnum;
         next->size = size;

@@ -21,6 +21,7 @@ typedef struct filelist
 	long size;//文件大小
 	long ltime;//最后修改时间
 	char user[20];	//发送者用户名
+	char s_addr[20];
 	struct filelist *next;
 	struct filelist *pre;
 }IPMSG_FILE;
@@ -30,7 +31,7 @@ void userlist_ds_item_add(IPMSG_USER* cur,char* name,char* host,char* s_addr);
 IPMSG_USER* userlist_ds_item_delete(IPMSG_USER* uhead,char* s_addr);
 void userlist_ds_destory(IPMSG_USER* ul);
 IPMSG_FILE* filelist_ds_init(void);
-void filelist_ds_item_add(IPMSG_FILE* head,char* name,int num,long pkgnum,long size,long ltime,char* user);
+void filelist_ds_item_add(IPMSG_FILE* head,char* name,int num,long pkgnum,long size,long ltime,char* user,char* s_addr);
 IPMSG_FILE* filelist_ds_item_delete(IPMSG_FILE* uhead,char* s_addr);
 void filelist_ds_destory(IPMSG_FILE* head);
 IPMSG_FILE* filelist_ds_item_get(IPMSG_FILE* uhead,char* filename);

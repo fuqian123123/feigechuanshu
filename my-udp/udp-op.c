@@ -223,7 +223,8 @@ void uni_rece(){
                                      real_num[i] = temp_num[1+i];
                                 }
                                 file_transfer_add(FILELIST_RECE_TYPE,temp_name,atoi(real_num),atoi(ipmsg_pack),
-                                                 strtol(temp_size,NULL,16),strtol(temp_ltime,NULL,16),username);
+                                                 strtol(temp_size,NULL,16),strtol(temp_ltime,NULL,16),username,
+                                                 inet_ntoa(fromwho.sin_addr));
                                 temp3 = strtok(NULL,"\\");
                                 free(real_num);
                                 real_num = NULL;
