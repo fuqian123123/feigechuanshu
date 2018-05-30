@@ -211,7 +211,7 @@ void uni_rece(){
                                 real_num[i] = temp_num[2+i];
                             }
                             file_transfer_add(FILELIST_RECE_TYPE,temp_name,atoi(real_num),atoi(ipmsg_pack),
-                                                atoi(temp_size),strtol(temp_ltime,NULL,16),username);
+                                                strtol(temp_size,NULL,16),strtol(temp_ltime,NULL,16),username);
                             file_transfer_printall(FILELIST_RECE_TYPE);
                             file_transfer_clear(FILELIST_RECE_TYPE);
                             free(real_num);
