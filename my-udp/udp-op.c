@@ -172,7 +172,6 @@ void uni_rece(){
             char ipmsg_v[20],ipmsg_flag[20],ipmsg_pack[20],username[20],hostname[25],addtion[BUFFER_SIZ];
             sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]",
                ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag);
-            //printf("%s\n",ipmsg_flag);
             //username is in addtion
             if(IPMSG_ANSENTRY == GET_MODE(strtol(ipmsg_flag,NULL,16))){
                 sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%s",
@@ -183,7 +182,6 @@ void uni_rece(){
             }
             //tcp transfer file ready
             if(IPMSG_GETFILEDATA == GET_MODE(strtol(ipmsg_flag,NULL,16))){
-                puts(buffer);
                 char num[10],pkgnum[30],size[10];
                 sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%[^:]",
                     ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,pkgnum,num,size);
@@ -230,9 +228,6 @@ void uni_rece(){
                                 free(real_num);
                                 real_num = NULL;
                             }
-                            file_transfer_printall(FILELIST_RECE_TYPE);
-                            //file_transfer_clear(FILELIST_RECE_TYPE);
-                            
                         }
                     }
                 }

@@ -112,7 +112,6 @@ void file_transfer_send_file(char* s_addr){
 }
 
 void file_transfer_clear(int type){
-    
     switch (type)
     {
         case FILELIST_SEND_TYPE:
@@ -156,7 +155,6 @@ void file_transfer_ready(int type,char* s_addr,char* filename){
 //send terminal begin to transfer file
 void file_transfer_launch(int type,long num,long pkgnum,char* s_addr){
     IPMSG_FILE* temp = NULL;
-    printf("%ld\t%ld\t\n",num,pkgnum);
     switch(type){
         case FILELIST_SEND_TYPE:
             temp = filelist_search(fl_send_head_addr,num,pkgnum);

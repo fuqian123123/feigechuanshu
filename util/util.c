@@ -89,8 +89,14 @@ void listen_input(void){
         if(buffer[strlen(buffer)-1] == '\n')
             buffer[strlen(buffer)-1] = '\0';
         //show userlist
-        if(!strcmp(buffer,command1)){
-            user_printall();
+        if(!strncmp(buffer,command1,2)){
+            char* para = strstr(buffer,"-");
+            if(para){
+                if(!strcmp(para,"-u"))
+                    user_printall();
+                else if(!strcmp(para,"-f"))
+                    file_transfer_printall(FILELIST_RECE_TYPE);
+            }
         }
         //chat with sb.
         else if(!strncmp(buffer,command2,strlen(command2))){
@@ -109,6 +115,7 @@ void listen_input(void){
             char s_addr[20],filename[128];
             sscanf(buffer,"%*s%s%s",filename,s_addr);
             file_transfer_ready(FILELIST_RECE_TYPE,s_addr,filename);
+            sleep(1);
         }
         else if(!strcmp(buffer,command5)){
             main_exit();

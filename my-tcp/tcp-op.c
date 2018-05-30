@@ -8,7 +8,6 @@ void tcp_send(char* s_addr,char* filename){
     int client_sock;
     char buffer[BUFFER_SIZ];
     FILE* fp;
-    puts(filename);
 
     if ((fp = fopen(filename, "r")) == NULL) {  
         perror("tcp_send: open file error");  
