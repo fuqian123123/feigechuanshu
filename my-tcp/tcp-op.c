@@ -41,7 +41,7 @@ void tcp_send(char* s_addr,char* filename){
     }
     fclose(fp);
     close(client_sock);
-    printf("\tTransfer finished.\n");
+    printf("Transfer finished.\n");
 }
 void tcp_rece(){
     int server_sock;

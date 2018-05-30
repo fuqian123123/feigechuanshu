@@ -40,11 +40,8 @@ void my_info_init(void){
 void menu_print(void){
     fprintf(stdout,"\t****************************************\n");
     printf("\t\t%-20s\n","1.chat");
-    printf("\t\t%-20s\n","2.sendto x.x.x.x");
-    printf("\t\t%-20s\n","3.sendfile x.x.x.x");
-    printf("\t\t%-20s\n","4.getfile filename x.x.x.x");
-    printf("\t\t%-20s\n","5.exit");
-    printf("\t\t%-20s\n","6.help");
+    printf("\t\t%-20s\n","2.tranfer file");
+    printf("\t\t%-20s\n","3.help");
     fprintf(stdout,"\t****************************************\n");
 }
 void help_print(void){
