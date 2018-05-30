@@ -72,7 +72,7 @@ void file_transfer_printall(int type){
 
 void file_transfer_send_file(char* s_addr){
     printf("\tNow input the files' absolute path you wanna transfer:\n");
-    char filename[INPUT_SIZ],msg_main[BUFFER_SIZ],buffer[BUFFER_SIZ];
+    char filename[INPUT_SIZ],buffer[BUFFER_SIZ];
     int file_order_num = 0;
     long pkgnum;
 
@@ -85,13 +85,12 @@ void file_transfer_send_file(char* s_addr){
             struct stat buf;
             stat(filename,&buf);
             pkgnum = (long)time(NULL);
-            sprintf(msg_main,"%x:%ld:%s:%s:%x:",
+            sprintf(buffer,"%x:%ld:%s:%s:%x:\\0%d:%s:%x:%x::",
                 (u32)IPMSG_VERSION,pkgnum,REALNAME,MYHOSTNAME,
-                (u32)(IPMSG_SENDMSG|IPMSG_SENDCHECKOPT|IPMSG_FILEATTACHOPT));
-            sprintf(buffer,"%s%d:%s:%x:%x::",
-                msg_main,file_order_num,filename,(u32)buf.st_size,(u32)buf.st_mtime);
+                (u32)(IPMSG_SENDMSG|IPMSG_SENDCHECKOPT|IPMSG_FILEATTACHOPT),
+                file_order_num,filename,(u32)buf.st_size,(u32)buf.st_mtime);
             uni_msg_send(s_addr,buffer);
-            printf("%x\n",(u32)(IPMSG_SENDMSG|IPMSG_SENDCHECKOPT|IPMSG_FILEATTACHOPT));
+            //printf("%x\n",(u32)(IPMSG_SENDMSG|IPMSG_SENDCHECKOPT|IPMSG_FILEATTACHOPT));
             file_transfer_add(FILELIST_SEND_TYPE,filename,file_order_num,pkgnum,
                                 (long)buf.st_size,(long)buf.st_mtime,USERNAME);
             file_order_num++;

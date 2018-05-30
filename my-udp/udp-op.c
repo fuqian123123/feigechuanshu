@@ -101,14 +101,14 @@ void br_rece(void){
                 ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
             //receive user entry message
             //username is in addtion
-            if(IPMSG_BR_ENTRY == GET_MODE(atoi(ipmsg_flag))){
+            if(IPMSG_BR_ENTRY == GET_MODE(strtol(ipmsg_flag,NULL,16))){
                 if(!user_is_existed(inet_ntoa(fromwho.sin_addr))){
                     user_entry(addtion,hostname,inet_ntoa(fromwho.sin_addr));
                 }
                 uni_answer_entry_send(inet_ntoa(fromwho.sin_addr));
             }
             //receive user exit message
-            if(IPMSG_BR_EXIT == GET_MODE(atoi(ipmsg_flag))){
+            if(IPMSG_BR_EXIT == GET_MODE(strtol(ipmsg_flag,NULL,16))){
                 if(user_is_existed(inet_ntoa(fromwho.sin_addr))){
                     user_exit(inet_ntoa(fromwho.sin_addr));
                 }
@@ -168,28 +168,42 @@ void uni_rece(){
                 (struct sockaddr*)&fromwho,(socklen_t*)&addr_len);
         buffer[receBytes] = '\0';
         if(receBytes > 0){
-            //printf("Recv %s\n\t",buffer);
             char ipmsg_v[20],ipmsg_flag[20],ipmsg_pack[20],username[20],hostname[25],addtion[BUFFER_SIZ];
-            sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%[a-z| |A-Z|0-9]",
-               ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
+            //sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%[a-z| |A-Z|0-9]",
+            //   ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
+            sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]",
+               ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag);
+            //printf("%s\n",ipmsg_flag);
             //username is in addtion
             if(IPMSG_ANSENTRY == GET_MODE(atoi(ipmsg_flag))){
+                sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%s",
+                    ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
                 if(!user_is_existed(inet_ntoa(fromwho.sin_addr))){
                     user_entry(addtion,hostname,inet_ntoa(fromwho.sin_addr));
                 }
             }
             //receive chat message from sb.
-            if(IPMSG_SENDMSG == GET_MODE(atoi(ipmsg_flag))){
-                printf("\tReceive a message from %s:%s\n",inet_ntoa(fromwho.sin_addr),addtion);
+            if(IPMSG_SENDMSG == GET_MODE(strtol(ipmsg_flag,NULL,16))){
+                //only IPMSG_SENDMSG
+                if(IPMSG_SENDMSG == strtol(ipmsg_flag,NULL,16)){
+                    sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%[a-z| |A-Z|0-9]",
+                       ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
+                    printf("\tReceive a message from %s:%s\n",inet_ntoa(fromwho.sin_addr),addtion);
+                }
                 //need check
-                if(IPMSG_SENDCHECKOPT == (GET_OPT(atoi(ipmsg_flag)) & IPMSG_SENDCHECKOPT)){
+                if(IPMSG_SENDCHECKOPT == GET_OPT(strtol(ipmsg_flag,NULL,16))){
                     char tempbuffer[BUFFER_SIZ];
                     sprintf(tempbuffer,"%x:%ld:%s:%s:%x:%s",(u32)IPMSG_VERSION,
                         (long int)time(NULL),REALNAME,MYHOSTNAME,(u32)IPMSG_RECVMSG,ipmsg_pack);
                     uni_msg_send(inet_ntoa(fromwho.sin_addr),tempbuffer);
-                    //need transfer file
-                    if(IPMSG_FILEATTACHOPT == (GET_OPT(atoi(ipmsg_flag)) & IPMSG_FILEATTACHOPT)){
-                        //file_transfer_add(FILELIST_RECE_TYPE,);
+                }
+                else{
+                    if(IPMSG_SENDCHECKOPT == (GET_OPT(strtol(ipmsg_flag,NULL,16))&IPMSG_SENDCHECKOPT)){
+                        //need transfer file
+                        if(IPMSG_FILEATTACHOPT == (GET_OPT(strtol(ipmsg_flag,NULL,16))&IPMSG_FILEATTACHOPT)){
+                            //file_transfer_add(FILELIST_RECE_TYPE,);
+                            puts("hehe");
+                        }
                     }
                 }
             }

@@ -27,7 +27,7 @@ void user_chat(char* s_addr){
         if(buffer[strlen(buffer)-1] == '\n')
             buffer[strlen(buffer)-1] = '\0';
         if(strncmp(buffer,"quit",4)){
-            sprintf(send_msg,"%u:%ld:%s:%s:%u:%s",
+            sprintf(send_msg,"%x:%ld:%s:%s:%x:%s",
             (u32)IPMSG_VERSION,(long int)time(NULL),REALNAME,MYHOSTNAME,(u32)IPMSG_SENDMSG,buffer);
             uni_msg_send(s_addr,send_msg);
         }
