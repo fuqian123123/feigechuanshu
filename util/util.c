@@ -14,7 +14,7 @@ static const char command6[] = "help";
 void username_get(void){
     int u_len,flag;
     do{
-        printf("Please input your username(1~20):");
+        printf("Please entry your username(1~20):");
         fgets(USERNAME,USERNAME_SIZ + 1,stdin);
         u_len = strlen(USERNAME);
         if(USERNAME[0] == '\n'){
@@ -95,7 +95,7 @@ void listen_input(void){
     char buffer[COM_SIZ];
     setbuf(stdin,NULL);
     while(1){
-        printf("\t%-20s\n\t","Please input your command:");
+        printf("\t%-20s\n\t","Please entry your command:");
         fgets(buffer,COM_SIZ,stdin);
         if(buffer[strlen(buffer)-1] == '\n')
             buffer[strlen(buffer)-1] = '\0';

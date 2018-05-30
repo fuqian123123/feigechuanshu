@@ -75,7 +75,7 @@ void file_transfer_printall(int type){
 }
 
 void file_transfer_send_file(char* s_addr){
-    printf("\tNow input the files' absolute path you wanna transfer:\n");
+    printf("\tNow entry the files' absolute path you wanna transfer:\n");
     char filename[INPUT_SIZ],buffer[BUFFER_SIZ];
     int file_order_num = 0;
     long pkgnum = (long)time(NULL);
