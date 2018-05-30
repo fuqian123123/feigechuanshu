@@ -1,5 +1,5 @@
-#ifndef _USER_H_
-#define _USER_H_
+#ifndef _USER_OP_H_
+#define _USER_OP_H_
 
 #include "../util/util.h"
 

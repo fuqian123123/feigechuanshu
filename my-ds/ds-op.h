@@ -1,5 +1,5 @@
-#ifndef _DS_H_
-#define _DS_H_
+#ifndef _DS_OP_H_
+#define _DS_OP_H_
 
 #include "../util/util.h"
 //用户信息结构体
@@ -33,4 +33,5 @@ IPMSG_FILE* filelist_ds_init(void);
 void filelist_ds_item_add(IPMSG_FILE* head,char* name,int num,long pkgnum,long size,long ltime,char* user);
 IPMSG_FILE* filelist_ds_item_delete(IPMSG_FILE* uhead,char* s_addr);
 void filelist_ds_destory(IPMSG_FILE* head);
+IPMSG_FILE* filelist_ds_item_get(IPMSG_FILE* uhead,char* filename);
 #endif

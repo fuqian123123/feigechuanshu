@@ -171,15 +171,23 @@ void uni_rece(){
             char ipmsg_v[20],ipmsg_flag[20],ipmsg_pack[20],username[20],hostname[25],addtion[BUFFER_SIZ];
             sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]",
                ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag);
-            //puts(buffer);
             //printf("%s\n",ipmsg_flag);
             //username is in addtion
-            if(IPMSG_ANSENTRY == GET_MODE(atoi(ipmsg_flag))){
+            if(IPMSG_ANSENTRY == GET_MODE(strtol(ipmsg_flag,NULL,16))){
                 sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%s",
                     ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,addtion);
                 if(!user_is_existed(inet_ntoa(fromwho.sin_addr))){
                     user_entry(addtion,hostname,inet_ntoa(fromwho.sin_addr));
                 }
+            }
+            //tcp transfer file ready
+            if(IPMSG_GETFILEDATA == GET_MODE(strtol(ipmsg_flag,NULL,16))){
+                //puts(buffer);
+                char num[10],pkgnum[30],size[10];
+                sscanf(buffer,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%[^:]:%[^:]",
+                    ipmsg_v,ipmsg_pack,username,hostname,ipmsg_flag,pkgnum,num,size);
+                //printf("%s\t%s\t%s\t\n",num,pkgnum,size);
+                
             }
             //receive chat message from sb.
             if(IPMSG_SENDMSG == GET_MODE(strtol(ipmsg_flag,NULL,16))){
@@ -202,19 +210,15 @@ void uni_rece(){
                         if(IPMSG_FILEATTACHOPT == (GET_OPT(strtol(ipmsg_flag,NULL,16))&IPMSG_FILEATTACHOPT)){
                             //puts(buffer);
                             char* temp = strstr(buffer,"\\0");
-                            puts(temp);
                             char* temp2 = strstr(temp,"\\a");
-                            puts(temp2);
                             char* temp3 = strtok(temp2,"\\");
                             //get all file info
                             while(temp3){
-                                puts(temp3);
                                 char temp_name[128],temp_num[10];
                                 char temp_size[10],temp_ltime[15];
                                 sscanf(temp3,"%[^:]:%[^:]:%[^:]:%[^:]:%[^:]",
                                      temp_num,temp_name,temp_size,temp_ltime,ipmsg_flag);
                                 char* real_num = (char*)malloc(sizeof(char)*(strlen(temp_num)-1));
-                                printf("%s\n",temp_ltime);
                                 for(int i = 0; i < (strlen(temp_num)-1);i++){
                                      real_num[i] = temp_num[1+i];
                                 }
@@ -225,7 +229,7 @@ void uni_rece(){
                                 real_num = NULL;
                             }
                             file_transfer_printall(FILELIST_RECE_TYPE);
-                            file_transfer_clear(FILELIST_RECE_TYPE);
+                            //file_transfer_clear(FILELIST_RECE_TYPE);
                             
                         }
                     }

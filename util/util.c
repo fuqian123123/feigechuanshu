@@ -71,6 +71,7 @@ void main_init(void){
 void main_exit(void){
     br_exit_send();
     user_clear();
+    file_transfer_clear(FILELIST_RECE_TYPE);
 }
 void listen_input(void){
     char buffer[COM_SIZ];
@@ -96,8 +97,13 @@ void listen_input(void){
             sscanf(buffer,"%*s%s", s_addr);
             file_transfer_send_file(s_addr);
         }
+        //getfile
         else if(!strncmp(buffer,command4,strlen(command4))){
-
+            char s_addr[20],filename[128];
+            sscanf(buffer,"%*s%s%s",filename,s_addr);
+            //puts(filename);
+            //puts(s_addr);
+            file_transfer_ready(FILELIST_RECE_TYPE,s_addr,filename);
         }
         else if(!strcmp(buffer,command5)){
             main_exit();

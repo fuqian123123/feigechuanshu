@@ -1,5 +1,5 @@
-#ifndef _FILE_H_
-#define _FILE_H_
+#ifndef _FILE_OP_H_
+#define _FILE_OP_H_
 
 #include "../util/util.h"
 
@@ -8,4 +8,5 @@ void file_transfer_add(int type,char* name,int num,long pkgnum,long size,long lt
 void file_transfer_printall(int type);
 void file_transfer_send_file(char* s_addr);
 void file_transfer_clear(int type);
+void file_transfer_ready(int type,char* s_addr,char* filename);
 #endif

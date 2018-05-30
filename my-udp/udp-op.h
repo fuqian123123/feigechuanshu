@@ -1,5 +1,5 @@
-#ifndef _MY_UDP_H
-#define _MY_UDP_H
+#ifndef _UDP_OP_H
+#define _UDP_OP_H
 
 #include "../util/util.h"
 

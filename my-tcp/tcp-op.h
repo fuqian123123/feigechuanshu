@@ -1,5 +1,5 @@
-#ifndef _MY_TCP_H
-#define _MY_TCP_H
+#ifndef _TCP_OP_H
+#define _TCP_OP_H
 
 #include "../util/util.h"
 

@@ -129,6 +129,16 @@ IPMSG_FILE* filelist_ds_item_delete(IPMSG_FILE* uhead,char* name){
     }
     return uhead;
 }
+IPMSG_FILE* filelist_ds_item_get(IPMSG_FILE* uhead,char* filename){
+        IPMSG_FILE* temp = uhead;
+        while(temp != NULL){
+            if(!strcmp(temp->name,filename)){
+                return temp;
+            }
+            temp = temp->next;            
+        }
+        return NULL;
+}
 void filelist_ds_destory(IPMSG_FILE* head){
     if(head != NULL){
         IPMSG_FILE* tail = head->next;

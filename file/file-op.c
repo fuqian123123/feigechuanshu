@@ -125,3 +125,31 @@ void file_transfer_clear(int type){
             break;
     }
 }
+
+void file_transfer_ready(int type,char* s_addr,char* filename){
+    char buffer[BUFFER_SIZ],addtion[BUFFER_SIZ];
+    IPMSG_FILE* temp = NULL;
+    switch(type)
+    {
+        case FILELIST_SEND_TYPE:
+            temp = filelist_ds_item_get(fl_send_head_addr,filename);
+        case FILELIST_RECE_TYPE:
+            temp = filelist_ds_item_get(fl_rece_head_addr,filename);
+        default:
+            break;
+    }
+    if(!temp){
+        printf("\tNo such file,please check your filename.");
+    }
+    else{
+        long num,pkgnum,size; 
+        num = temp->num;
+        pkgnum = temp->pkgnum;
+        size = temp->size;
+        sprintf(addtion,"%x:%x:%x",(u32)pkgnum,(u32)num,(u32)size);
+        sprintf(buffer,"%x:%ld:%s:%s:%x:%s",
+                (u32)IPMSG_VERSION,(long int)time(NULL),REALNAME,MYHOSTNAME,(u32)IPMSG_GETFILEDATA,addtion);
+        uni_msg_send(s_addr,buffer);
+        //puts(buffer);
+    }
+}
