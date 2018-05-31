@@ -1,4 +1,4 @@
-#include "user.h"
+#include "user-op.h"
 
 static IPMSG_USER* ul_head_addr;
 
@@ -18,15 +18,17 @@ void user_entry(char* name,char* host,char* s_addr){
         user_init(name,host,s_addr);
     }
 }
-//chat with sb.
+//chat.
 void user_chat(char* s_addr){
     printf("\tNow chat with %s:\n",s_addr);
-    char buffer[CHAT_SIZ],send_msg[BUFSIZ];
+    char buffer[INPUT_SIZ],send_msg[BUFFER_SIZ];
     while(1){
-        fgets(buffer,CHAT_SIZ,stdin);
+        fgets(buffer,INPUT_SIZ,stdin);
+        if(buffer[strlen(buffer)-1] == '\n')
+            buffer[strlen(buffer)-1] = '\0';
         if(strncmp(buffer,"quit",4)){
-            sprintf(send_msg,"%d:%ld:%s:%s:%d:%s",
-            (int)IPMSG_VERSION,(long int)time(NULL),REALNAME,MYHOSTNAME,(int)IPMSG_SENDMSG,buffer);
+            sprintf(send_msg,"%x:%ld:%s:%s:%x:%s",
+            (u32)IPMSG_VERSION,(long int)time(NULL),REALNAME,MYHOSTNAME,(u32)IPMSG_SENDMSG,buffer);
             uni_msg_send(s_addr,send_msg);
         }
         else{

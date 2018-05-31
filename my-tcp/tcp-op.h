@@ -1,8 +1,8 @@
-#ifndef _MY_TCP_H
-#define _MY_TCP_H
+#ifndef _TCP_OP_H
+#define _TCP_OP_H
 
 #include "../util/util.h"
 
-void tcp_msg_send(char* s_addr);
-void tcp_msg_rece();
+void tcp_send(char* s_addr,char* filename);
+void tcp_rece();
 #endif
