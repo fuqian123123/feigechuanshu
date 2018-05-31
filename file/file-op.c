@@ -151,7 +151,6 @@ void file_transfer_ready(int type,char* s_addr,char* filename){
                 (u32)IPMSG_VERSION,(long int)time(NULL),REALNAME,MYHOSTNAME,
                 (u32)IPMSG_GETFILEDATA,(u32)pkgnum,(u32)num,(u32)size);
         uni_msg_send(s_addr,buffer);
-        //puts(buffer);
     }
 }
 //send terminal begin to transfer file

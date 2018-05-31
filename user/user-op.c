@@ -18,7 +18,7 @@ void user_entry(char* name,char* host,char* s_addr){
         user_init(name,host,s_addr);
     }
 }
-//chat with sb.
+//chat.
 void user_chat(char* s_addr){
     printf("\tNow chat with %s:\n",s_addr);
     char buffer[INPUT_SIZ],send_msg[BUFFER_SIZ];
