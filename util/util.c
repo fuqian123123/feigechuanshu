@@ -12,12 +12,12 @@ static const char command6[] = "help";
 
 
 void username_get(void){
-    int u_len,flag;
+    int u_len,flag = 0;
     do{
         printf("Please entry your username(1~20):");
-        fgets(USERNAME,USERNAME_SIZ + 1,stdin);
+        fgets(USERNAME,USERNAME_SIZ,stdin);
         u_len = strlen(USERNAME);
-        if(USERNAME[0] == '\n'){
+        if(u_len <= 1){
             printf("Your username cannot be empty,try again.\n");
         }
         else if(USERNAME[u_len-1] == '\n'){
