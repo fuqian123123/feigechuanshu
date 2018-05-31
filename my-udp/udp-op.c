@@ -238,3 +238,17 @@ void uni_rece(){
     }
     close(rece_fd);
 }
+void udp_rece(void){
+    int ret;
+    pthread_t id1,id2;
+    ret = pthread_create(&id1,NULL,(void*)br_rece,NULL);
+    if(ret){
+        perror("id1 created failed!");
+    }
+    pthread_detach(id1);
+    ret = pthread_create(&id2,NULL,(void*)uni_rece,NULL);
+    if(ret){
+        perror("id2 created failed!");
+    }
+    pthread_detach(id2);
+}

@@ -57,23 +57,18 @@ void help_print(void){
 }
 void main_init(void){
     int ret;
-    pthread_t id1,id2,id3,id4;
-    ret = pthread_create(&id1,NULL,(void*)br_rece,NULL);
+    pthread_t id1,id2,id3;
+    ret = pthread_create(&id1,NULL,(void*)udp_rece,NULL);
     if(ret){
         perror("id1 created failed!");
     }
     pthread_detach(id1);
-    ret = pthread_create(&id2,NULL,(void*)uni_rece,NULL);
+    
+    ret = pthread_create(&id2,NULL,(void*)tcp_rece,NULL);
     if(ret){
         perror("id2 created failed!");
     }
     pthread_detach(id2);
-    
-    ret = pthread_create(&id4,NULL,(void*)tcp_rece,NULL);
-    if(ret){
-        perror("id4 created failed!");
-    }
-    pthread_detach(id4);
     sleep(1);
 
     br_entry_send();

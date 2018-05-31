@@ -11,5 +11,6 @@ void br_exit_send(void);
 void br_rece(void);
 void uni_msg_send(char* s_addr,char* msg);
 void uni_answer_entry_send(char* s_addr);
-void uni_rece();
+void uni_rece(void);
+void udp_rece(void);
 #endif
