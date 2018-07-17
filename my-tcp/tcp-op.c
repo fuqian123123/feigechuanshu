@@ -7,7 +7,6 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include "../def.h"
-//#include "../util/util.h"
 
 static const int TCP_PORT = 17989;
 static const int MAX_LEN = 128;

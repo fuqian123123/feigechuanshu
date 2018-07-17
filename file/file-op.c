@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "file-op.h"
+#include <sys/stat.h>
+#include "../def.h"
+#include "../ipmsg.h"
+#include "../my-ds/ds-op.h"
 
 static IPMSG_FILE* fl_send_head_addr;
 static IPMSG_FILE* fl_rece_head_addr;

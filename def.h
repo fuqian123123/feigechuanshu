@@ -19,4 +19,7 @@ typedef signed char         s8;
 typedef float               fp32;
 typedef double              fp64;
 
+extern char USERNAME[USERNAME_SIZ];
+extern char MYHOSTNAME[HOSTNAME_SIZ];
+extern char REALNAME[REALNAME_SIZ];
 #endif

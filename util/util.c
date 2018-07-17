@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <pthread.h>
+#include "../def.h"
 #include "util.h"
 
 char USERNAME[USERNAME_SIZ] = "";

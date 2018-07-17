@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../def.h"
+#include "../ipmsg.h"
 #include "../my-ds/ds-op.h"
 //#include "user-op.h"
 
