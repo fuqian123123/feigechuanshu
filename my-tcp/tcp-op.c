@@ -1,5 +1,12 @@
-
-#include "tcp-op.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include "../util/util.h"
 
 static const int TCP_PORT = 17989;
 static const int MAX_LEN = 128;
@@ -100,8 +107,4 @@ void tcp_rece(){
         close(cli_sock);
     }
     close(server_sock);    
-}
-
-void send_file(){
-
 }

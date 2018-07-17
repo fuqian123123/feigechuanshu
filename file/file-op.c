@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 #include "file-op.h"
 
 static IPMSG_FILE* fl_send_head_addr;

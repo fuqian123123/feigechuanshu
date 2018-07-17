@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "ds-op.h"
 
 IPMSG_USER* userlist_ds_init(void){
