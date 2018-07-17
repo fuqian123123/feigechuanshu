@@ -1,6 +1,15 @@
 #ifndef _DEF_H_
 #define _DEF_H_
 
+#define COM_SIZ 80
+#define USERNAME_SIZ 20
+#define HOSTNAME_SIZ 256
+#define REALNAME_SIZ 50
+#define INPUT_SIZ 128
+#define BUFFER_SIZ 1024
+#define FILELIST_SEND_TYPE 0
+#define FILELIST_RECE_TYPE 1
+
 typedef unsigned int        u32;
 typedef unsigned short      u16;
 typedef unsigned char       u8;

@@ -1,4 +1,8 @@
-#include "user-op.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "../my-ds/ds-op.h"
+//#include "user-op.h"
 
 static IPMSG_USER* ul_head_addr;
 
