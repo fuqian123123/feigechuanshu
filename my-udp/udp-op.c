@@ -7,6 +7,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <pthread.h>
+#include <time.h>
 #include "../def.h"
 #include "../ipmsg.h"
 #include "../my-ds/ds-op.h"
