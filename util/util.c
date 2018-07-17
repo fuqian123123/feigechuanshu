@@ -10,7 +10,6 @@ static const char command4[] = "getfile";
 static const char command5[] = "exit";
 static const char command6[] = "help";
 
-
 void username_get(void){
     int u_len,flag = 0;
     do{
