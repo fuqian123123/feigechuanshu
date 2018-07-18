@@ -8,9 +8,12 @@
 #include <netdb.h>
 #include <pthread.h>
 #include <time.h>
+#include "udp-op.h"
 #include "../def.h"
 #include "../ipmsg.h"
 #include "../my-ds/ds-op.h"
+#include "../user/user-op.h"
+#include "../file/file-op.h"
 
 #define BR_ENTRY_FLAG 0
 #define BR_EXIT_FLAG 1
