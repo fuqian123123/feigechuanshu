@@ -1,11 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include <pwd.h>
+#include <sys/utsname.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <pthread.h>
-#include "../def.h"
 #include "util.h"
+#include "../def.h"
+#include "../ipmsg.h"
+#include "../my-tcp/tcp-op.h"
+#include "../my-udp/udp-op.h"
+#include "../user/user-op.h"
+#include "../file/file-op.h"
 
 char USERNAME[USERNAME_SIZ] = "";
 char MYHOSTNAME[HOSTNAME_SIZ] = "";

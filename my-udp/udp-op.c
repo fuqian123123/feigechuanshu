@@ -35,7 +35,6 @@ int get_br_sock_fd(void){
     setsockopt(br_fd,SOL_SOCKET,SO_BROADCAST | SO_REUSEADDR,&optval,sizeof(int));
     return br_fd;
 }
-
 int get_uni_sock_fd(void){
     int uni_fd;
     uni_fd = socket(PF_INET,SOCK_DGRAM,0);

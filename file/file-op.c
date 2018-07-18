@@ -6,6 +6,8 @@
 #include "../def.h"
 #include "../ipmsg.h"
 #include "../my-ds/ds-op.h"
+#include "../my-tcp/tcp-op.h"
+#include "../my-udp/udp-op.h"
 
 static IPMSG_FILE* fl_send_head_addr;
 static IPMSG_FILE* fl_rece_head_addr;
