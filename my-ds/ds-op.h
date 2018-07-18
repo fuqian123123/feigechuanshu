@@ -1,7 +1,6 @@
 #ifndef _DS_OP_H_
 #define _DS_OP_H_
 
-#include "../util/util.h"
 //用户信息结构体
 typedef struct userlist
 {

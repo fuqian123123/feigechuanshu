@@ -1,8 +1,6 @@
 #ifndef _UDP_OP_H
 #define _UDP_OP_H
 
-#include "../util/util.h"
-
 int get_br_sock_fd(void);
 int get_uni_sock_fd(void);
 void br_send(int flag);

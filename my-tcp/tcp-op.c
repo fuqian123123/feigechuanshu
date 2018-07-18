@@ -1,5 +1,13 @@
-
-#include "tcp-op.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <time.h>
+#include "../def.h"
 
 static const int TCP_PORT = 17989;
 static const int MAX_LEN = 128;
@@ -66,7 +74,7 @@ void tcp_rece(){
     server.sin_family = AF_INET;
     server.sin_port = htons(TCP_PORT);
     server.sin_addr.s_addr = INADDR_ANY;
-    int addr_len = sizeof(client);
+    socklen_t addr_len = sizeof(client);
 
     if(bind(server_sock,(struct sockaddr*)&server,sizeof(server)) < 0){
         perror("tcp_rece: socket bind error");
@@ -83,7 +91,7 @@ void tcp_rece(){
         }
         int rece_bytes,write_bytes;
         bzero(buffer,MAX_LEN);
-        while(rece_bytes = recv(cli_sock,buffer,MAX_LEN,0)){
+        while((rece_bytes = recv(cli_sock,buffer,MAX_LEN,0))){
             if(rece_bytes > 0){
                 //puts(buffer);
                 write_bytes = fwrite(buffer, sizeof(char),rece_bytes, fp);
@@ -100,8 +108,4 @@ void tcp_rece(){
         close(cli_sock);
     }
     close(server_sock);    
-}
-
-void send_file(){
-
 }
